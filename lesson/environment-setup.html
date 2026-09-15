@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; 環境構築 – データ分析ゼミ：環境構築</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a277fc7c0b5572c02727048f32503fbf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-1fc17faf87dfba659ec2708af60eecc0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lesson/environment-setup.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">環境構築</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="サーチ" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/logo-wakaba.svg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../images/logo-wakaba.svg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">データ分析ゼミ：環境構築</a> 
+        <div class="sidebar-tools-main">
+    <a href="../データ分析ゼミ：環境構築.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">この教材について</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lesson/environment-setup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">環境構築</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#作業前の準備" id="toc-作業前の準備" class="nav-link active" data-scroll-target="#作業前の準備"><span class="header-section-number">1.1</span> 作業前の準備</a></li>
+  <li><a href="#sec-mac" id="toc-sec-mac" class="nav-link" data-scroll-target="#sec-mac"><span class="header-section-number">1.2</span> macOS：Homebrew・VS Code・Git</a></li>
+  <li><a href="#sec-windows" id="toc-sec-windows" class="nav-link" data-scroll-target="#sec-windows"><span class="header-section-number">1.3</span> Windows：winget・VS Code・Git</a></li>
+  <li><a href="#sec-markdown" id="toc-sec-markdown" class="nav-link" data-scroll-target="#sec-markdown"><span class="header-section-number">1.4</span> 演習：Markdownを書いてプレビューする</a></li>
+  <li><a href="#sec-github" id="toc-sec-github" class="nav-link" data-scroll-target="#sec-github"><span class="header-section-number">1.5</span> GitHubアカウントを準備する</a></li>
+  <li><a href="#sec-git" id="toc-sec-git" class="nav-link" data-scroll-target="#sec-git"><span class="header-section-number">1.6</span> Gitの初期設定</a></li>
+  <li><a href="#github-educationを申請する" id="toc-github-educationを申請する" class="nav-link" data-scroll-target="#github-educationを申請する"><span class="header-section-number">1.7</span> GitHub Educationを申請する</a></li>
+  <li><a href="#完了チェックと提出" id="toc-完了チェックと提出" class="nav-link" data-scroll-target="#完了チェックと提出"><span class="header-section-number">1.8</span> 完了チェックと提出</a></li>
+  <li><a href="#困ったとき" id="toc-困ったとき" class="nav-link" data-scroll-target="#困ったとき"><span class="header-section-number">1.9</span> 困ったとき</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">環境構築</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="作業前の準備" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="作業前の準備"><span class="header-section-number">1.1</span> 作業前の準備</h2>
+<p>自分が管理できるPC、安定したインターネット接続、受信できる個人メールと大学メール、現在の在学状況を確認できる学生証などを用意します。大学管理のPCでは、ソフトの導入可否を担当者に確認してください。</p>
+<section id="道具の役割" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="道具の役割"><span class="header-section-number">1.1.1</span> 道具の役割</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>道具</th>
+<th>何に使うか</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Homebrew / winget</td>
+<td>アプリをコマンドで導入・更新するパッケージマネージャ</td>
+</tr>
+<tr class="even">
+<td>VS Code</td>
+<td>文章やプログラムを書くエディタ</td>
+</tr>
+<tr class="odd">
+<td>Git</td>
+<td>ファイルの変更履歴を記録するソフト</td>
+</tr>
+<tr class="even">
+<td>GitHub</td>
+<td>Gitで管理した資料を共有するWebサービス</td>
+</tr>
+<tr class="odd">
+<td>Markdown</td>
+<td>見出しや箇条書きを簡単な記号で書く形式</td>
+</tr>
+</tbody>
+</table>
+<p>「コマンド」はPCへの文字による指示です。Macではターミナル、WindowsではPowerShellに入力してEnterを押します。コード枠の中だけをコピーし、複数行は上から1行ずつ実行します。行頭に表示されるプロンプト（<code>$</code> や <code>PS C:\...&gt;</code>）は入力しません。</p>
+<p>パスワード・認証コード・回復コードは、教材のメモや提出物に書かないでください。</p>
+</section>
+</section>
+<section id="sec-mac" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-mac"><span class="header-section-number">1.2</span> macOS：Homebrew・VS Code・Git</h2>
+<p>Windowsの人は<a href="#sec-windows">Windowsの手順</a>へ進みます。</p>
+<section id="osとターミナルを確認する" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="osとターミナルを確認する"><span class="header-section-number">1.2.1</span> OSとターミナルを確認する</h3>
+<ol type="1">
+<li>Appleメニューの「このMacについて」を開き、macOSのバージョンとチップを確認します。「Apple M…」ならApple Silicon、「Intel」ならIntel Macです。</li>
+<li><a href="https://docs.brew.sh/Installation">Homebrewの動作要件</a>を確認します。対応外のOSの場合は担当者へ相談します。</li>
+<li>Spotlight（Command+Space）で「ターミナル」を検索し、起動します。</li>
+</ol>
+</section>
+<section id="homebrewを導入する" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="homebrewを導入する"><span class="header-section-number">1.2.2</span> Homebrewを導入する</h3>
+<p>まず次を実行します。バージョンが表示されれば、インストール作業は省略できます。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> <span class="at">--version</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>未導入なら<a href="https://brew.sh/">Homebrew公式サイト</a>のインストールコマンドを確認して実行します。以下は確認時点のコマンドです。折り返されていても1行です。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/bin/bash</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="va">)</span><span class="st">"</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>これは公式のインストール用スクリプトを取得し、実行する指示です。画面に出る変更内容を読んで進めます。パスワードを求められたらMacへのログインパスワードを入力します。入力中に文字や丸印が表示されなくても正常です。Command Line Toolsの導入が始まった場合は完了を待ちます。</p>
+<p>完了画面の <strong>Next steps</strong> にコマンドが表示されたら、その指示を実行します。これはHomebrewを探す場所（PATH）をターミナルに知らせる設定です。通常の導入先はApple Siliconが <code>/opt/homebrew</code>、Intelが <code>/usr/local</code> ですが、自分の画面に表示された指示を使ってください。</p>
+<p>ターミナルを開き直し、確認します。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> <span class="at">--version</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> doctor</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>前者でバージョン、後者で診断結果が表示されれば実行できています。警告がある場合は内容を確認します。警告すべてが授業を止める問題とは限りません。判断できない場合はエラー文を担当者に見せます。</p>
+</section>
+<section id="vs-codeとgitを導入する" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="vs-codeとgitを導入する"><span class="header-section-number">1.2.3</span> VS CodeとGitを導入する</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> visual-studio-code</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install git</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>完了後、アプリケーションからVisual Studio Codeを起動します。ターミナルを開き直して確認します。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--version</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>両方でバージョンが出れば完了です。<code>code</code> が見つからない場合は、VS CodeでCommand+Shift+Pを押し、<code>Shell Command: Install 'code' command in PATH</code> を検索して実行し、ターミナルを開き直します。</p>
+<p>公式資料：<a href="https://formulae.brew.sh/cask/visual-studio-code">VS CodeのHomebrewパッケージ</a>、<a href="https://code.visualstudio.com/docs/setup/mac">VS CodeのmacOS設定</a>。</p>
+</section>
+</section>
+<section id="sec-windows" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-windows"><span class="header-section-number">1.3</span> Windows：winget・VS Code・Git</h2>
+<p>Macの人は<a href="#sec-markdown">Markdown演習</a>へ進みます。</p>
+<section id="powershellとwingetを確認する" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="powershellとwingetを確認する"><span class="header-section-number">1.3.1</span> PowerShellとwingetを確認する</h3>
+<ol type="1">
+<li>設定の「システム」→「バージョン情報」でWindowsのバージョンを確認します。大学の方針に従い、サポートされているOSを使います。</li>
+<li>スタートメニューで「PowerShell」を検索して、通常の権限で起動します。Windows Terminalを使う場合はPowerShellのタブを選びます。</li>
+<li>次のコマンドを実行します。</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>winget <span class="op">--</span>version</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>v</code> で始まるバージョンが出れば利用できます。見つからなければMicrosoft StoreでMicrosoft提供の「アプリ インストーラー（App Installer）」をインストールまたは更新し、PowerShellを開き直します。利用できない場合は<a href="https://learn.microsoft.com/windows/package-manager/winget/">winget公式資料</a>を確認します。</p>
+</section>
+<section id="vs-codeとgitを導入する-1" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="vs-codeとgitを導入する-1"><span class="header-section-number">1.3.2</span> VS CodeとGitを導入する</h3>
+<p>次のコマンドを1行ずつ実行します。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>winget install <span class="op">--</span>id Microsoft<span class="op">.</span><span class="fu">VisualStudioCode</span> <span class="op">-</span>e <span class="op">--</span>source winget</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>winget install <span class="op">--</span>id Git<span class="op">.</span><span class="fu">Git</span> <span class="op">-</span>e <span class="op">--</span>source winget</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>--id</code> はアプリの識別名、<code>-e</code> は完全一致、<code>--source winget</code> は検索する配布元の指定です。利用条件やインストール確認が出たら内容を読んで進みます。管理者の許可を求められた場合は、自分が開始したインストールか確認してください。管理されたPCでは担当者に依頼します。</p>
+<p>インストール終了後、PowerShellを閉じて開き直します。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>code <span class="op">--</span>version</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>git <span class="op">--</span>version</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>両方でバージョンが出れば完了です。スタートメニューからVisual Studio Codeを起動できることも確認します。</p>
+<p>公式資料：<a href="https://learn.microsoft.com/windows/package-manager/winget/install">winget install</a>、<a href="https://code.visualstudio.com/docs/setup/windows">VS CodeのWindows設定</a>。</p>
+</section>
+</section>
+<section id="sec-markdown" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec-markdown"><span class="header-section-number">1.4</span> 演習：Markdownを書いてプレビューする</h2>
+<p>目安は15分です。完成時には、左にMarkdownの原稿、右に整形された表示が並びます。</p>
+<section id="作業フォルダとファイルを作る" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="作業フォルダとファイルを作る"><span class="header-section-number">1.4.1</span> 作業フォルダとファイルを作る</h3>
+<p>Finderまたはエクスプローラーで自分のホームフォルダ（ユーザーフォルダ）を開き、<code>seminar-work</code> というフォルダを作成します。同名のフォルダがあれば、その中を確認して使います。</p>
+<p>VS Codeの「ファイル」→「フォルダーを開く」から、そのフォルダを選びます。自分で作ったフォルダに対する信頼確認が出たら、内容を確認して信頼します。</p>
+<p>コマンドでも開けます。フォルダ作成後、Macのターミナルでは次を実行します。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/seminar-work</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>WindowsのPowerShellでは次を実行します。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="st">"</span><span class="va">$env</span><span class="op">:</span><span class="va">USERPROFILE</span><span class="st">\seminar-work"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>code <span class="op">.</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>.</code> は「今いるフォルダ」です。VS Codeの左側のエクスプローラーから「新しいファイル」を選び、<code>setup-check.md</code> と名付けます。</p>
+</section>
+<section id="markdownを入力する" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="markdownを入力する"><span class="header-section-number">1.4.2</span> Markdownを入力する</h3>
+<p>次の内容を入力またはコピーします。コード枠の外側のバッククォートは入力しません。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 環境構築チェック</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## 使用環境</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OS：macOS または Windows</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>エディタ：VS Code</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>バージョン確認：<span class="in">`git --version`</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## 完了した作業</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> VS Codeを起動した</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Gitのバージョンを確認した</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> GitHubアカウントを作成した</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## 参考資料</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">GitHub Docs</span><span class="co">](https://docs.github.com/)</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>MacはCommand+S、WindowsはCtrl+Sで保存します。ファイル名が <code>setup-check.md.txt</code> になっていないことを確認してください。</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>記号</th>
+<th>表示の意味</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>#</code>、<code>##</code></td>
+<td>見出し、ひとつ下の階層の見出し</td>
+</tr>
+<tr class="even">
+<td><code>-</code></td>
+<td>箇条書き</td>
+</tr>
+<tr class="odd">
+<td><code>- [ ]</code>、<code>- [x]</code></td>
+<td>未完了、完了のチェック項目</td>
+</tr>
+<tr class="even">
+<td>バッククォートで囲む</td>
+<td>コマンドなどを本文と区別して表示</td>
+</tr>
+<tr class="odd">
+<td><code>[表示名](URL)</code></td>
+<td>リンク</td>
+</tr>
+</tbody>
+</table>
+<p><code>#</code> や <code>-</code> の後には半角スペースを入れます。段落やリストの前後には空行を入れます。</p>
+</section>
+<section id="通常プレビューを開く" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="通常プレビューを開く"><span class="header-section-number">1.4.3</span> 通常プレビューを開く</h3>
+<p>原稿のタブを選び、次のショートカットを押します。</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>macOS</th>
+<th>Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>プレビュー</td>
+<td>Command+Shift+V</td>
+<td>Ctrl+Shift+V</td>
+</tr>
+<tr class="even">
+<td>横にプレビュー</td>
+<td>Command+K → V</td>
+<td>Ctrl+K → V</td>
+</tr>
+</tbody>
+</table>
+<p>横に表示するときは、原稿へ戻ってから操作します。矢印は「最初のキーの組み合わせを押して離し、続けてVを押す」という意味です。</p>
+<p>メニューから開く場合は、コマンドパレット（Mac：Command+Shift+P、Windows：Ctrl+Shift+P）で <code>Markdown: Open Preview to the Side</code> を検索します。</p>
+</section>
+<section id="編集が反映されるか確認する" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="編集が反映されるか確認する"><span class="header-section-number">1.4.4</span> 編集が反映されるか確認する</h3>
+<ol type="1">
+<li>左の原稿でOS名を自分の環境に合わせて書き換えます。</li>
+<li>VS Code起動の項目を <code>- [x] VS Codeを起動した</code> に変更します。</li>
+<li><code>## 今日わかったこと</code> を追加し、その下に学んだことを1行書きます。</li>
+<li>右のプレビューで見出し・チェック状態・文章が更新されたか確認します。</li>
+<li>保存して、ファイルを開き直しても変更が残ることを確認します。</li>
+</ol>
+<p><strong>演習の成功条件：</strong> 原稿とプレビューを左右に表示でき、編集結果が反映され、保存したファイルが残っていることです。チェック項目は原稿側で書き換えます。GitHubの項目は後の作業が終わってから更新します。</p>
+<p>この演習ではVS Code標準のMarkdownプレビューを使います。追加の拡張機能は不要です。プレビューのセキュリティ設定は既定のStrictのままで表示できます。</p>
+<p>公式資料：<a href="https://code.visualstudio.com/docs/languages/markdown">Markdown編集とプレビュー</a>。</p>
+</section>
+</section>
+<section id="sec-github" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="sec-github"><span class="header-section-number">1.5</span> GitHubアカウントを準備する</h2>
+<section id="アカウントとメール認証" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="アカウントとメール認証"><span class="header-section-number">1.5.1</span> アカウントとメール認証</h3>
+<p>既に個人アカウントがある人は、それを利用します。</p>
+<ol type="1">
+<li><a href="https://github.com/">GitHub</a>を開き、Sign upから個人アカウントを作成します。</li>
+<li>継続して使えるユーザー名を選びます。ユーザー名は公開プロフィールやURLに使われます。</li>
+<li>画面の案内に従い、登録メールに届く確認を完了します。</li>
+<li>サインイン後、Settings → Emailsで大学メールを追加します。</li>
+<li>大学メール宛ての確認を完了し、認証済みになっていることを確認します。</li>
+</ol>
+<p>卒業後も使う個人メールを登録しておくと、大学メールが失効した後も連絡先を維持できます。公開プロフィールにメールを表示するかどうかは別に設定できます。</p>
+<p>公式資料：<a href="https://docs.github.com/account-and-profile/how-tos/account-management/creating-an-account-on-github">アカウントの作成</a>。</p>
+</section>
+<section id="二要素認証を設定する" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="二要素認証を設定する"><span class="header-section-number">1.5.2</span> 二要素認証を設定する</h3>
+<p>二要素認証（2FA）は、パスワードに加えて認証アプリなどで本人確認を行う仕組みです。</p>
+<ol type="1">
+<li>Settings → Password and authenticationを開きます。</li>
+<li>Two-factor authenticationの設定を開始し、認証アプリなどの方法を画面に従って登録します。</li>
+<li>回復コードを保存します。スマートフォンを紛失しても使えるよう、パスワード管理アプリなど安全な場所に保管します。</li>
+<li>設定画面で二要素認証が有効であることを確認します。</li>
+</ol>
+<p>回復コードはアカウントへのアクセスを回復するための秘密情報です。GitHubのリポジトリ、<code>setup-check.md</code>、授業の提出物には保存しません。</p>
+<p>公式資料：<a href="https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication">二要素認証の設定</a>。</p>
+</section>
+</section>
+<section id="sec-git" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="sec-git"><span class="header-section-number">1.6</span> Gitの初期設定</h2>
+<p>Gitは変更履歴に作成者の名前とメールを記録します。この設定はGitHubへのログインとは別です。公開する履歴にも含まれるため、設定する値を先に決めます。</p>
+<p>GitHubのSettings → Emailsでメール非公開の設定を確認すると、GitHub提供の <code>noreply</code> アドレスを確認できます。個人のメールを公開したくない場合は、そのアドレスをそのままコピーして使います。文字列を推測して作らないでください。</p>
+<p>次の引用符内を自分の値に置き換えてから、ターミナルまたはPowerShellで実行します。名前は履歴に表示したい名前、メールはGitHubで認証済みのメールかGitHub提供の非公開用メールにします。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"自分の表示名"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"自分のメールアドレス"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> init.defaultBranch main</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>--global</code> はこのPCの自分のユーザー全体に適用する指定です。既に設定済みなら、変更前に下の確認コマンドで現在の値を見てください。<code>main</code> は新しく履歴管理を始めるときの既定ブランチ名です。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--get</span> user.name</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--get</span> user.email</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--get</span> init.defaultBranch</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>指定した名前・メール・<code>main</code> が順に表示されれば完了です。全設定を自分で確認するには <code>git config --global --list</code> を使えますが、出力全体を提出する必要はありません。接続設定、コミット、pushは後の授業で扱います。</p>
+<p>公式資料：<a href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup">Gitの初期設定</a>、<a href="https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address">コミットのメール設定</a>。</p>
+</section>
+<section id="github-educationを申請する" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="github-educationを申請する"><span class="header-section-number">1.7</span> GitHub Educationを申請する</h2>
+<section id="条件と書類を確認する" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="条件と書類を確認する"><span class="header-section-number">1.7.1</span> 条件と書類を確認する</h3>
+<p>申請には個人のGitHubアカウントが必要です。学生向けの主な条件は13歳以上で、学位・卒業資格につながる教育課程に現在在籍していることです。学校発行の認証可能なメール、または現在の在籍を証明する資料を用意します。学校によって大学メールの認証が必要です。</p>
+<p>在学資料には、氏名・学校名・現在の在籍期間が確認できる学生証、履修時間割、成績証明書、在学証明書などを使います。日付のない学生証しかない場合は、現在の在籍が分かる追加資料を準備します。</p>
+</section>
+<section id="申請を送信する" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="申請を送信する"><span class="header-section-number">1.7.2</span> 申請を送信する</h3>
+<ol type="1">
+<li>GitHubへサインインします。</li>
+<li><a href="https://github.com/settings/education/benefits">Education benefits</a>を開き、申請開始（Start an application）を選びます。</li>
+<li>学生として申請し、学校名・大学メールなど、フォームが求める情報を入力します。</li>
+<li>在学証明を求められたら、文字と日付が読める資料をフォームの案内に沿って提出します。</li>
+<li>内容を確認して送信し、申請状況を確認します。</li>
+</ol>
+<p><strong>ここでの完了は申請送信までです。</strong> 審査待ちは環境構築の失敗ではありません。<code>setup-check.md</code> に「申請済み・審査待ち」などの状態だけ記録します。証明書の画像は学習メモや公開リポジトリに入れません。</p>
+<p>大学メールが発行されない学校では、申請画面の案内に沿って在学資料や学校のメール発行方針を示します。ドメインが認識されない場合は公式ヘルプの案内からサポートへ連絡します。</p>
+<p>条件・申請方法の一次情報：<a href="https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student">GitHub Educationへの学生申請</a>。</p>
+</section>
+<section id="承認後の確認" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="承認後の確認"><span class="header-section-number">1.7.3</span> 承認後の確認</h3>
+<p>承認されたらEducation benefitsで利用できる特典を確認します。GitHub Copilotなどの特典は別途有効化が必要な場合があり、反映に数日かかることもあります。有料プランしか表示されない場合は、そのまま購入せず、承認状態と公式案内を確認します。</p>
+<p>公式資料：<a href="https://docs.github.com/copilot/how-tos/copilot-on-github/set-up-copilot/enable-copilot/set-up-for-students">学生向けCopilotの設定</a>。</p>
+</section>
+</section>
+<section id="完了チェックと提出" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="完了チェックと提出"><span class="header-section-number">1.8</span> 完了チェックと提出</h2>
+<p>次の項目を自分で確認し、<code>setup-check.md</code> を更新します。</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>brew --version</code> または <code>winget --version</code> が表示される。</label></li>
+<li><label><input type="checkbox">VS Codeを起動でき、<code>code --version</code> が表示される。</label></li>
+<li><label><input type="checkbox"><code>git --version</code> が表示される。</label></li>
+<li><label><input type="checkbox"><code>setup-check.md</code> を作成・保存できる。</label></li>
+<li><label><input type="checkbox">Markdownの通常プレビューと左右分割プレビューを開ける。</label></li>
+<li><label><input type="checkbox">原稿の編集がプレビューに反映される。</label></li>
+<li><label><input type="checkbox">Gitの名前・メール・既定ブランチを確認した。</label></li>
+<li><label><input type="checkbox">GitHubにサインインでき、登録メールと大学メールを認証した。</label></li>
+<li><label><input type="checkbox">二要素認証を有効にし、回復コードを安全に保管した。</label></li>
+<li><label><input type="checkbox">Educationを申請した。または、未申請の理由を整理した。</label></li>
+</ul>
+<p>授業での提出例は <code>setup-check.md</code> です。OS、確認したソフトのバージョン、完了項目、分かったこと、困っていることを記録します。アカウント名・メール・認証情報・学生証は含めません。提出先は授業担当者が指定します。</p>
+<p><strong>確認問題：</strong> GitとGitHubはそれぞれ何をする道具ですか。Markdownの原稿とプレビューはどのような関係ですか。自分の言葉で説明してみましょう。</p>
+</section>
+<section id="困ったとき" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="困ったとき"><span class="header-section-number">1.9</span> 困ったとき</h2>
+<section id="macでbrewが見つからない" class="level3" data-number="1.9.1">
+<h3 data-number="1.9.1" class="anchored" data-anchor-id="macでbrewが見つからない"><span class="header-section-number">1.9.1</span> Macでbrewが見つからない</h3>
+<p>導入後のPATH設定が未反映の可能性があります。インストール最後のNext stepsを確認し、指示を実行してターミナルを開き直します。<a href="https://docs.brew.sh/Installation">Homebrew導入資料</a>を参照してください。</p>
+</section>
+<section id="codeまたはgitが見つからない" class="level3" data-number="1.9.2">
+<h3 data-number="1.9.2" class="anchored" data-anchor-id="codeまたはgitが見つからない"><span class="header-section-number">1.9.2</span> codeまたはgitが見つからない</h3>
+<p>インストール後も古いターミナルを使っている可能性があります。VS Code内のターミナルも含めて開き直します。Macの <code>code</code> は<a href="#sec-mac">macOSの節</a>のPATH設定を確認します。Windowsはインストール完了を確認し、<a href="https://code.visualstudio.com/docs/setup/windows">公式設定手順</a>を参照します。</p>
+</section>
+<section id="windowsでwingetが見つからない" class="level3" data-number="1.9.3">
+<h3 data-number="1.9.3" class="anchored" data-anchor-id="windowsでwingetが見つからない"><span class="header-section-number">1.9.3</span> Windowsでwingetが見つからない</h3>
+<p>App Installerが未導入・未更新の可能性があります。Microsoft Storeで確認します。Storeが利用制限されている場合は、大学の管理担当者へ相談します。<a href="https://learn.microsoft.com/windows/package-manager/winget/">winget公式資料</a>を参照してください。</p>
+</section>
+<section id="markdownプレビューが開かない更新されない" class="level3" data-number="1.9.4">
+<h3 data-number="1.9.4" class="anchored" data-anchor-id="markdownプレビューが開かない更新されない"><span class="header-section-number">1.9.4</span> Markdownプレビューが開かない・更新されない</h3>
+<p>ファイルの拡張子が <code>.md</code> か確認します。原稿のタブを選び、コマンドパレットからMarkdownのプレビューを開きます。別ファイルのプレビューを見ていないか確認し、保存します。横に開くキーは同時押しを2段階に分けます。<a href="https://code.visualstudio.com/docs/languages/markdown">VS Code公式資料</a>も確認してください。</p>
+</section>
+<section id="githubの確認メールが届かない" class="level3" data-number="1.9.5">
+<h3 data-number="1.9.5" class="anchored" data-anchor-id="githubの確認メールが届かない"><span class="header-section-number">1.9.5</span> GitHubの確認メールが届かない</h3>
+<p>迷惑メール、メールアドレスの入力間違い、大学メールの受信制限を確認します。Settings → Emailsで再送できます。<a href="https://docs.github.com/en/account-and-profile/how-tos/email-preferences/verifying-your-email-address">メール認証の公式案内</a>を参照してください。</p>
+</section>
+<section id="educationで学校が見つからない証明が受理されない" class="level3" data-number="1.9.6">
+<h3 data-number="1.9.6" class="anchored" data-anchor-id="educationで学校が見つからない証明が受理されない"><span class="header-section-number">1.9.6</span> Educationで学校が見つからない・証明が受理されない</h3>
+<p>大学メールの認証、学校名、書類の氏名・日付・可読性を確認します。却下理由が表示されたらそれを読み、必要な資料をそろえて再申請します。解決しない場合は<a href="https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student">学生申請の公式案内</a>からサポートへ進みます。</p>
+<p>担当者へ相談するときは、OS、実行した操作、エラー文、試した対処を伝えます。スクリーンショットに秘密情報が写っていないか確認してから共有します。</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="この教材について">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">この教材について</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
