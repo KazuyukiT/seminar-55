@@ -1,0 +1,33 @@
+profile:
+  default: wakaba
+project:
+  type: book
+  output-dir: _book
+book:
+  title: "データ分析ゼミ：環境構築"
+  subtitle: "はじめての開発環境とMarkdown"
+  author: "授業用教材・試作版"
+  chapters:
+    - index.qmd
+    - lesson/environment-setup.qmd
+  search: true
+  downloads: [pdf]
+lang: ja
+toc-depth: 2
+number-sections: true
+execute:
+  enabled: false
+format:
+  html:
+    theme: cosmo
+    code-copy: true
+    code-overflow: wrap
+  typst:
+    papersize: a4
+    mainfont: "Hiragino Sans"
+    fontsize: 10pt
+    margin:
+      x: 22mm
+      y: 22mm
+    toc: true
+    keep-typ: true

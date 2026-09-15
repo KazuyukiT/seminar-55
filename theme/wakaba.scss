@@ -1,0 +1,108 @@
+// =====================================================================
+// wakaba.scss ― パターン②「若葉」
+//
+// 深い緑と、からし色の小さな「葉」が見出しに付く。丸ゴシックで柔らかく。
+// 背景はごく薄い黄緑がかった白で、サイドバーだけ淡い緑にして紙の重なりを作る。
+// 本文: BIZ UDPGothic（読みやすさ重視のUDフォント）/ 見出し: Zen Maru Gothic
+// =====================================================================
+
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+// --- 色 ---
+$ink:      #26332c;
+$green:    #2e7d4f;
+$mustard:  #d9a441;
+$paper:    #fcfdfa;
+$moss:     #eef4ea;   // サイドバー
+
+$body-bg: $paper;
+$body-color: $ink;
+$link-color: $green;
+$headings-color: #1f4a33;
+
+$font-family-sans-serif: "BIZ UDPGothic", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+$headings-font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "BIZ UDPGothic", sans-serif;
+
+$sidebar-bg: $moss;
+$sidebar-fg: #3d4d44;
+$sidebar-hl: $green;
+$toc-color: #55645c;
+$toc-active-border: $green;
+$toc-inactive-border: #dfe6da;
+
+$code-bg: #e9f1e4;
+$code-color: #1f5a3a;
+$code-block-bg: #f1f5ee;
+
+$callout-color-note:      #2b7a8b;
+$callout-color-tip:       $green;
+$callout-color-warning:   $mustard;
+$callout-color-important: #c65d4a;
+$callout-color-caution:   #d97b3a;
+
+// --- _common.scss へ渡す装飾変数 ---
+$accent: $green;
+$accent-soft: $moss;
+$sidebar-active-bg: #ffffff;
+$sidebar-active-fg: $green;
+$heading-radius: .75rem;
+
+/*-- scss:rules --*/
+
+// 葉っぱの形（角丸を対角だけ効かせる）
+@mixin leaf($size, $color) {
+  content: "";
+  display: inline-block;
+  width: $size;
+  height: $size;
+  background-color: $color;
+  border-radius: 0 70% 0 70%;
+  transform: rotate(-10deg);
+  flex: none;
+}
+
+// h2: からし色の葉 + 緑の文字（右目次の見出しは除外）
+h2:not(#toc-title), .h2 {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  &::before { @include leaf(.62em, $mustard); }
+}
+
+// h3: 小さな緑の葉
+h3, .h3 {
+  display: flex;
+  align-items: center;
+  gap: .45em;
+  &::before { @include leaf(.5em, $green); opacity: .85; }
+}
+
+// タイトルは緑の丸ゴシック
+#title-block-header .title { color: $green; }
+
+// サイドバーのアクティブ項目：白い紙が一枚浮いたように
+.sidebar.sidebar-navigation .sidebar-item-container:has(> .sidebar-link.active) {
+  box-shadow: 0 1px 2px rgba(31, 74, 51, .12);
+}
+
+// 目次のアクティブは緑
+nav[role="doc-toc"] ul > li > a.active { color: $green; }
+
+// 表の見出し行
+#quarto-document-content table.table thead th {
+  background-color: $moss;
+  border-bottom-color: $green;
+}
+
+// コールアウトの見出しは丸ゴシック
+div.callout.callout-style-default > .callout-header {
+  font-family: $headings-font-family;
+}
+
+// 引用はからし色で緑と区別
+blockquote {
+  border-left-color: $mustard;
+  background-color: rgba($mustard, .07);
+}

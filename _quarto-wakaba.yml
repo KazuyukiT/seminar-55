@@ -1,0 +1,14 @@
+# パターン「若葉」  使い方: quarto render --profile wakaba
+# （_quarto.yml の profile.default を wakaba にすれば、引数なしでもこの設定になります）
+book:
+  sidebar:
+    logo: images/logo-wakaba.svg
+format:
+  html:
+    theme:
+      - cosmo
+      - theme/_common.scss
+      - theme/wakaba.scss
+      # コールアウトの見た目。callout-card / callout-rule / callout-tag /
+      # callout-margin / callout-band のどれかに差し替え可
+      - theme/callout-tag.scss

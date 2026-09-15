@@ -1,0 +1,400 @@
+// =====================================================================
+// _common.scss ― 4 パターン共通のレイアウト・余白・部品スタイル
+//
+// 参考サイト (kazuyanagimoto.com/workshop-graduate-2026) と同じ
+// 「左: floating サイドバー / 中央: 本文 / 右: 目次」の book レイアウトを前提に、
+// 色とフォント以外の見た目をここでまとめて決めています。
+// 色・フォントは各パターンの scss (marker / wakaba / sora / sumi) で設定します。
+//
+// `!default` 付きの変数は、パターン側で同名の変数を書けばそちらが優先されます。
+// =====================================================================
+
+/*-- scss:defaults --*/
+
+// --- 文字サイズと行間（和文は行間を広めに） ---
+$font-size-root: 17px !default;
+$line-height-base: 1.8 !default;
+$headings-line-height: 1.4 !default;
+$headings-font-weight: 700 !default;
+
+// --- レイアウト幅（本文はやや狭めにして 1 行 35〜40 字に収める） ---
+$grid-sidebar-width: 240px !default;
+$grid-body-width: 760px !default;
+$grid-margin-width: 230px !default;
+
+// --- リンクは下線なし（本文中だけ薄い下線を rules で付ける） ---
+$link-decoration: none !default;
+
+// --- コード ---
+$code-block-border-left: false !default;
+$code-block-bg-padding: 1rem !default;
+$font-family-monospace: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace !default;
+
+// --- パターン側で必ず定義する「装飾用」変数の既定値 ---
+$accent: #3b5bdb !default;            // 見出し飾り・アクティブ表示に使う主色
+$accent-soft: #eef1fb !default;       // 主色の淡い版（背景用）
+$sidebar-active-bg: transparent !default;
+$sidebar-active-fg: $accent !default;
+$heading-radius: .5rem !default;      // 角丸の基準。パターンで 0 にすれば角ばった印象になる
+
+/*-- scss:rules --*/
+
+:root {
+  --acc: #{$accent};
+  --acc-soft: #{$accent-soft};
+  --radius: #{$heading-radius};
+}
+
+// ---------------------------------------------------------------------
+// 本文
+// ---------------------------------------------------------------------
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "palt" 0;   // 和文はベタ組みのまま（詰めない）
+}
+
+#quarto-document-content {
+  p { margin-bottom: 1.3rem; }
+  ul, ol { padding-left: 1.5rem; margin-bottom: 1.3rem; }
+  li { margin-bottom: .3rem; }
+  li > p { margin-bottom: .5rem; }
+  strong { font-weight: 700; }
+
+  // 本文リンクだけ薄い下線
+  a:not(.nav-link):not(.footnote-ref):not(.anchorjs-link):not(.quarto-xref):not(.btn) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .22em;
+    text-decoration-color: rgba($accent, .45);
+    transition: text-decoration-color .15s ease;
+    &:hover { text-decoration-color: $accent; }
+  }
+}
+
+// ---------------------------------------------------------------------
+// 見出し
+// ---------------------------------------------------------------------
+h1, .h1 {
+  font-size: 1.95rem;
+  margin-top: .25rem;
+  margin-bottom: 1.5rem;
+}
+h2, .h2 {
+  font-size: 1.4rem;
+  margin-top: 3rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0;
+  border-bottom: none;   // cosmo の下線は外し、パターン側で飾りを付ける
+}
+h3, .h3 {
+  font-size: 1.15rem;
+  margin-top: 2.25rem;
+  margin-bottom: .9rem;
+}
+h4, .h4 { font-size: 1.02rem; margin-top: 1.75rem; }
+
+.header-section-number {
+  font-weight: 600;
+  opacity: .5;
+  margin-right: .45em;
+  font-variant-numeric: tabular-nums;
+}
+
+// 見出しの「#」アンカー
+.anchorjs-link { color: rgba($accent, .55) !important; }
+
+// ---------------------------------------------------------------------
+// タイトルブロック（トップページの書名・副題・著者・日付）
+// ---------------------------------------------------------------------
+#title-block-header {
+  margin-bottom: 2.5rem;
+
+  .title {
+    font-size: 2.1rem;
+    margin-bottom: .35rem;
+    line-height: 1.3;
+  }
+  .subtitle {
+    font-size: 1.05rem;
+    margin-top: 0;
+    opacity: .75;
+  }
+  .quarto-title-meta {
+    margin-top: 1.25rem;
+    gap: 1.5rem;
+  }
+  .quarto-title-meta-heading {
+    font-size: .74rem;
+    letter-spacing: .04em;
+    opacity: .6;
+  }
+  .quarto-title-meta-contents { font-size: .92rem; }
+}
+
+// ---------------------------------------------------------------------
+// 左サイドバー（章一覧）
+// ---------------------------------------------------------------------
+#quarto-sidebar {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+// 色付きサイドバーが本文の高さで途切れないよう、画面の高さまで伸ばす
+@media (min-width: 992px) {
+  #quarto-sidebar.floating { min-height: 100vh; }
+}
+
+.sidebar-header-stacked { text-align: center; }
+
+.sidebar-logo {
+  max-width: 104px;
+  margin: .25rem auto .75rem;
+}
+
+.sidebar-title {
+  font-family: $headings-font-family;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.sidebar.sidebar-navigation {
+  .sidebar-item { margin-bottom: .15rem; }
+
+  .sidebar-item-container {
+    border-radius: var(--radius);
+    transition: background-color .15s ease;
+  }
+
+  .sidebar-link {
+    display: block;
+    padding: .32rem .65rem;
+    border-radius: var(--radius);
+    font-size: .93rem;
+    line-height: 1.45;
+  }
+
+  .sidebar-item-container:has(> .sidebar-link.active) {
+    background-color: $sidebar-active-bg;
+  }
+  .sidebar-link.active,
+  .sidebar-link.active .chapter-title {
+    color: $sidebar-active-fg;
+    font-weight: 700;
+  }
+
+  .chapter-number {
+    display: inline-block;
+    min-width: 1.4em;
+    opacity: .55;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // 「付録」などのセクション見出し
+  .sidebar-item-section > .sidebar-item-container > .sidebar-link {
+    font-weight: 700;
+  }
+}
+
+// ---------------------------------------------------------------------
+// 右目次
+// ---------------------------------------------------------------------
+#quarto-margin-sidebar {
+  padding-top: 1.5rem;
+}
+
+#toc-title {
+  font-family: $headings-font-family;
+  font-size: .85rem;
+  font-weight: 700;
+  margin-bottom: .6rem;
+}
+
+nav[role="doc-toc"] {
+  ul > li > a {
+    font-size: .86rem;
+    line-height: 1.45;
+    padding: .28rem .8rem;
+    border-left-width: 2px;
+  }
+  ul > li > ul > li > a { font-size: .82rem; }
+  ul > li > a.active { font-weight: 700; }
+}
+
+// ---------------------------------------------------------------------
+// コールアウトの見た目は theme/callout-*.scss に分離（プロファイルで選ぶ）
+//   callout-card.scss   角丸カード（Quarto 標準に近い）
+//   callout-rule.scss   罫線：上下の細い罫と種別ラベルだけ
+//   callout-tag.scss    札：枠線の上に題名の札が乗る
+//   callout-margin.scss 欄外：種別ラベルを左余白に出す
+//   callout-band.scss   帯：縦書きの種別ラベル帯
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// コードブロック・インラインコード
+// ---------------------------------------------------------------------
+div.sourceCode {
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 0, 0, .06);
+  margin: 1.25rem 0;
+}
+pre.sourceCode {
+  padding: 1rem 1.15rem;
+  font-size: .86em;
+  line-height: 1.65;
+  margin: 0;
+}
+pre:not(.sourceCode) {
+  border-radius: var(--radius);
+  padding: 1rem 1.15rem;
+  font-size: .86em;
+}
+p code:not(.sourceCode),
+li code:not(.sourceCode),
+td code:not(.sourceCode) {
+  font-size: .88em;
+  padding: .12em .4em;
+  border-radius: .3em;
+}
+.code-copy-button {
+  border-radius: .35rem;
+  &:hover { background-color: rgba($accent, .1); }
+}
+
+// ---------------------------------------------------------------------
+// 表
+// ---------------------------------------------------------------------
+#quarto-document-content table.table,
+#quarto-document-content .table {
+  font-size: .92rem;
+  margin: 1.25rem 0;
+  th { font-weight: 700; padding: .55rem .75rem; }
+  td { padding: .5rem .75rem; vertical-align: top; }
+  thead th { border-bottom: 2px solid $accent; border-top: none; }
+  tbody tr:last-child td { border-bottom: 1px solid rgba(0, 0, 0, .12); }
+}
+.table-caption, caption {
+  caption-side: bottom;
+  font-size: .86rem;
+  padding-top: .5rem;
+  opacity: .8;
+}
+
+// ---------------------------------------------------------------------
+// 図
+// ---------------------------------------------------------------------
+figure.quarto-float {
+  margin: 1.75rem auto;
+}
+figcaption.quarto-float-caption,
+figcaption.figure-caption {
+  font-size: .86rem;
+  text-align: center;
+  margin-top: .6rem;
+  opacity: .8;
+}
+.quarto-float-fig img { border-radius: calc(var(--radius) * .6); }
+
+// ---------------------------------------------------------------------
+// 引用
+// ---------------------------------------------------------------------
+blockquote {
+  margin: 1.5rem 0;
+  padding: .75rem 1.25rem;
+  border-left: 4px solid rgba($accent, .55);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background-color: rgba($accent, .05);
+  font-size: .97rem;
+  p:last-child { margin-bottom: 0; }
+}
+
+// ---------------------------------------------------------------------
+// タブセット
+// ---------------------------------------------------------------------
+.panel-tabset {
+  margin: 1.25rem 0;
+  > .nav-tabs {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    margin-bottom: .75rem;
+    .nav-link {
+      border: none;
+      border-bottom: 3px solid transparent;
+      border-radius: 0;
+      padding: .45rem .9rem;
+      font-weight: 600;
+      font-size: .93rem;
+      opacity: .7;
+      &:hover { opacity: 1; border-bottom-color: rgba($accent, .35); }
+      &.active {
+        opacity: 1;
+        background: transparent;
+        border-bottom-color: $accent;
+      }
+    }
+  }
+  // 既定の枠と余白を外し、中のコードブロックが二重枠にならないようにする
+  > .tab-content {
+    border: none;
+    padding: 0;
+    > .tab-pane > div.sourceCode:first-child { margin-top: 0; }
+  }
+}
+
+// ---------------------------------------------------------------------
+// チェックリスト
+// ---------------------------------------------------------------------
+ul.task-list {
+  list-style: none;
+  padding-left: .25rem;
+  li { padding-left: .1rem; }
+  input[type="checkbox"] {
+    accent-color: $accent;
+    margin-right: .5rem;
+    transform: scale(1.05);
+  }
+}
+
+// ---------------------------------------------------------------------
+// 脚注・前後ページ・検索
+// ---------------------------------------------------------------------
+#footnotes {
+  font-size: .88rem;
+  opacity: .85;
+  margin-top: 3rem;
+}
+
+.nav-page {
+  a {
+    padding: .55rem .9rem;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0, 0, 0, .1);
+    transition: background-color .15s ease, border-color .15s ease;
+    &:hover { background-color: var(--acc-soft); border-color: transparent; }
+  }
+  .nav-page-text { font-size: .93rem; }
+}
+.page-navigation { margin-top: 3.5rem; }
+
+// ---------------------------------------------------------------------
+// 品質の下限：フォーカス・動きの抑制・スマホ幅
+// ---------------------------------------------------------------------
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 2px;
+  border-radius: .25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  h1, .h1 { font-size: 1.65rem; }
+  h2, .h2 { font-size: 1.28rem; margin-top: 2.4rem; }
+  #title-block-header .title { font-size: 1.7rem; }
+}

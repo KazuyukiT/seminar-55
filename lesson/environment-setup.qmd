@@ -1,0 +1,331 @@
+# 環境構築
+
+## 作業前の準備
+
+自分が管理できるPC、安定したインターネット接続、受信できる個人メールと大学メール、現在の在学状況を確認できる学生証などを用意します。大学管理のPCでは、ソフトの導入可否を担当者に確認してください。
+
+### 道具の役割
+
+| 道具 | 何に使うか |
+|---|---|
+| Homebrew / winget | アプリをコマンドで導入・更新するパッケージマネージャ |
+| VS Code | 文章やプログラムを書くエディタ |
+| Git | ファイルの変更履歴を記録するソフト |
+| GitHub | Gitで管理した資料を共有するWebサービス |
+| Markdown | 見出しや箇条書きを簡単な記号で書く形式 |
+
+「コマンド」はPCへの文字による指示です。Macではターミナル、WindowsではPowerShellに入力してEnterを押します。コード枠の中だけをコピーし、複数行は上から1行ずつ実行します。行頭に表示されるプロンプト（`$` や `PS C:\...>`）は入力しません。
+
+パスワード・認証コード・回復コードは、教材のメモや提出物に書かないでください。
+
+## macOS：Homebrew・VS Code・Git {#sec-mac}
+
+Windowsの人は[Windowsの手順](#sec-windows)へ進みます。
+
+### OSとターミナルを確認する
+
+1. Appleメニューの「このMacについて」を開き、macOSのバージョンとチップを確認します。「Apple M…」ならApple Silicon、「Intel」ならIntel Macです。
+2. [Homebrewの動作要件](https://docs.brew.sh/Installation)を確認します。対応外のOSの場合は担当者へ相談します。
+3. Spotlight（Command+Space）で「ターミナル」を検索し、起動します。
+
+### Homebrewを導入する
+
+まず次を実行します。バージョンが表示されれば、インストール作業は省略できます。
+
+```bash
+brew --version
+```
+
+未導入なら[Homebrew公式サイト](https://brew.sh/)のインストールコマンドを確認して実行します。以下は確認時点のコマンドです。折り返されていても1行です。
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+これは公式のインストール用スクリプトを取得し、実行する指示です。画面に出る変更内容を読んで進めます。パスワードを求められたらMacへのログインパスワードを入力します。入力中に文字や丸印が表示されなくても正常です。Command Line Toolsの導入が始まった場合は完了を待ちます。
+
+完了画面の **Next steps** にコマンドが表示されたら、その指示を実行します。これはHomebrewを探す場所（PATH）をターミナルに知らせる設定です。通常の導入先はApple Siliconが `/opt/homebrew`、Intelが `/usr/local` ですが、自分の画面に表示された指示を使ってください。
+
+ターミナルを開き直し、確認します。
+
+```bash
+brew --version
+brew doctor
+```
+
+前者でバージョン、後者で診断結果が表示されれば実行できています。警告がある場合は内容を確認します。警告すべてが授業を止める問題とは限りません。判断できない場合はエラー文を担当者に見せます。
+
+### VS CodeとGitを導入する
+
+```bash
+brew install --cask visual-studio-code
+brew install git
+```
+
+完了後、アプリケーションからVisual Studio Codeを起動します。ターミナルを開き直して確認します。
+
+```bash
+code --version
+git --version
+```
+
+両方でバージョンが出れば完了です。`code` が見つからない場合は、VS CodeでCommand+Shift+Pを押し、`Shell Command: Install 'code' command in PATH` を検索して実行し、ターミナルを開き直します。
+
+公式資料：[VS CodeのHomebrewパッケージ](https://formulae.brew.sh/cask/visual-studio-code)、[VS CodeのmacOS設定](https://code.visualstudio.com/docs/setup/mac)。
+
+## Windows：winget・VS Code・Git {#sec-windows}
+
+Macの人は[Markdown演習](#sec-markdown)へ進みます。
+
+### PowerShellとwingetを確認する
+
+1. 設定の「システム」→「バージョン情報」でWindowsのバージョンを確認します。大学の方針に従い、サポートされているOSを使います。
+2. スタートメニューで「PowerShell」を検索して、通常の権限で起動します。Windows Terminalを使う場合はPowerShellのタブを選びます。
+3. 次のコマンドを実行します。
+
+```powershell
+winget --version
+```
+
+`v` で始まるバージョンが出れば利用できます。見つからなければMicrosoft StoreでMicrosoft提供の「アプリ インストーラー（App Installer）」をインストールまたは更新し、PowerShellを開き直します。利用できない場合は[winget公式資料](https://learn.microsoft.com/windows/package-manager/winget/)を確認します。
+
+### VS CodeとGitを導入する
+
+次のコマンドを1行ずつ実行します。
+
+```powershell
+winget install --id Microsoft.VisualStudioCode -e --source winget
+winget install --id Git.Git -e --source winget
+```
+
+`--id` はアプリの識別名、`-e` は完全一致、`--source winget` は検索する配布元の指定です。利用条件やインストール確認が出たら内容を読んで進みます。管理者の許可を求められた場合は、自分が開始したインストールか確認してください。管理されたPCでは担当者に依頼します。
+
+インストール終了後、PowerShellを閉じて開き直します。
+
+```powershell
+code --version
+git --version
+```
+
+両方でバージョンが出れば完了です。スタートメニューからVisual Studio Codeを起動できることも確認します。
+
+公式資料：[winget install](https://learn.microsoft.com/windows/package-manager/winget/install)、[VS CodeのWindows設定](https://code.visualstudio.com/docs/setup/windows)。
+
+## 演習：Markdownを書いてプレビューする {#sec-markdown}
+
+目安は15分です。完成時には、左にMarkdownの原稿、右に整形された表示が並びます。
+
+### 作業フォルダとファイルを作る
+
+Finderまたはエクスプローラーで自分のホームフォルダ（ユーザーフォルダ）を開き、`seminar-work` というフォルダを作成します。同名のフォルダがあれば、その中を確認して使います。
+
+VS Codeの「ファイル」→「フォルダーを開く」から、そのフォルダを選びます。自分で作ったフォルダに対する信頼確認が出たら、内容を確認して信頼します。
+
+コマンドでも開けます。フォルダ作成後、Macのターミナルでは次を実行します。
+
+```bash
+cd ~/seminar-work
+code .
+```
+
+WindowsのPowerShellでは次を実行します。
+
+```powershell
+cd "$env:USERPROFILE\seminar-work"
+code .
+```
+
+`.` は「今いるフォルダ」です。VS Codeの左側のエクスプローラーから「新しいファイル」を選び、`setup-check.md` と名付けます。
+
+### Markdownを入力する
+
+次の内容を入力またはコピーします。コード枠の外側のバッククォートは入力しません。
+
+```markdown
+# 環境構築チェック
+
+## 使用環境
+
+- OS：macOS または Windows
+- エディタ：VS Code
+- バージョン確認：`git --version`
+
+## 完了した作業
+
+- [ ] VS Codeを起動した
+- [ ] Gitのバージョンを確認した
+- [ ] GitHubアカウントを作成した
+
+## 参考資料
+
+- [GitHub Docs](https://docs.github.com/)
+```
+
+MacはCommand+S、WindowsはCtrl+Sで保存します。ファイル名が `setup-check.md.txt` になっていないことを確認してください。
+
+| 記号 | 表示の意味 |
+|---|---|
+| `# `、`## ` | 見出し、ひとつ下の階層の見出し |
+| `- ` | 箇条書き |
+| `- [ ] `、`- [x] ` | 未完了、完了のチェック項目 |
+| バッククォートで囲む | コマンドなどを本文と区別して表示 |
+| `[表示名](URL)` | リンク |
+
+`#` や `-` の後には半角スペースを入れます。段落やリストの前後には空行を入れます。
+
+### 通常プレビューを開く
+
+原稿のタブを選び、次のショートカットを押します。
+
+| 操作 | macOS | Windows |
+|---|---|---|
+| プレビュー | Command+Shift+V | Ctrl+Shift+V |
+| 横にプレビュー | Command+K → V | Ctrl+K → V |
+
+横に表示するときは、原稿へ戻ってから操作します。矢印は「最初のキーの組み合わせを押して離し、続けてVを押す」という意味です。
+
+メニューから開く場合は、コマンドパレット（Mac：Command+Shift+P、Windows：Ctrl+Shift+P）で `Markdown: Open Preview to the Side` を検索します。
+
+### 編集が反映されるか確認する
+
+1. 左の原稿でOS名を自分の環境に合わせて書き換えます。
+2. VS Code起動の項目を `- [x] VS Codeを起動した` に変更します。
+3. `## 今日わかったこと` を追加し、その下に学んだことを1行書きます。
+4. 右のプレビューで見出し・チェック状態・文章が更新されたか確認します。
+5. 保存して、ファイルを開き直しても変更が残ることを確認します。
+
+**演習の成功条件：** 原稿とプレビューを左右に表示でき、編集結果が反映され、保存したファイルが残っていることです。チェック項目は原稿側で書き換えます。GitHubの項目は後の作業が終わってから更新します。
+
+この演習ではVS Code標準のMarkdownプレビューを使います。追加の拡張機能は不要です。プレビューのセキュリティ設定は既定のStrictのままで表示できます。
+
+公式資料：[Markdown編集とプレビュー](https://code.visualstudio.com/docs/languages/markdown)。
+
+## GitHubアカウントを準備する {#sec-github}
+
+### アカウントとメール認証
+
+既に個人アカウントがある人は、それを利用します。
+
+1. [GitHub](https://github.com/)を開き、Sign upから個人アカウントを作成します。
+2. 継続して使えるユーザー名を選びます。ユーザー名は公開プロフィールやURLに使われます。
+3. 画面の案内に従い、登録メールに届く確認を完了します。
+4. サインイン後、Settings → Emailsで大学メールを追加します。
+5. 大学メール宛ての確認を完了し、認証済みになっていることを確認します。
+
+卒業後も使う個人メールを登録しておくと、大学メールが失効した後も連絡先を維持できます。公開プロフィールにメールを表示するかどうかは別に設定できます。
+
+公式資料：[アカウントの作成](https://docs.github.com/account-and-profile/how-tos/account-management/creating-an-account-on-github)。
+
+### 二要素認証を設定する
+
+二要素認証（2FA）は、パスワードに加えて認証アプリなどで本人確認を行う仕組みです。
+
+1. Settings → Password and authenticationを開きます。
+2. Two-factor authenticationの設定を開始し、認証アプリなどの方法を画面に従って登録します。
+3. 回復コードを保存します。スマートフォンを紛失しても使えるよう、パスワード管理アプリなど安全な場所に保管します。
+4. 設定画面で二要素認証が有効であることを確認します。
+
+回復コードはアカウントへのアクセスを回復するための秘密情報です。GitHubのリポジトリ、`setup-check.md`、授業の提出物には保存しません。
+
+公式資料：[二要素認証の設定](https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication)。
+
+## Gitの初期設定 {#sec-git}
+
+Gitは変更履歴に作成者の名前とメールを記録します。この設定はGitHubへのログインとは別です。公開する履歴にも含まれるため、設定する値を先に決めます。
+
+GitHubのSettings → Emailsでメール非公開の設定を確認すると、GitHub提供の `noreply` アドレスを確認できます。個人のメールを公開したくない場合は、そのアドレスをそのままコピーして使います。文字列を推測して作らないでください。
+
+次の引用符内を自分の値に置き換えてから、ターミナルまたはPowerShellで実行します。名前は履歴に表示したい名前、メールはGitHubで認証済みのメールかGitHub提供の非公開用メールにします。
+
+```bash
+git config --global user.name "自分の表示名"
+git config --global user.email "自分のメールアドレス"
+git config --global init.defaultBranch main
+```
+
+`--global` はこのPCの自分のユーザー全体に適用する指定です。既に設定済みなら、変更前に下の確認コマンドで現在の値を見てください。`main` は新しく履歴管理を始めるときの既定ブランチ名です。
+
+```bash
+git config --global --get user.name
+git config --global --get user.email
+git config --global --get init.defaultBranch
+```
+
+指定した名前・メール・`main` が順に表示されれば完了です。全設定を自分で確認するには `git config --global --list` を使えますが、出力全体を提出する必要はありません。接続設定、コミット、pushは後の授業で扱います。
+
+公式資料：[Gitの初期設定](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)、[コミットのメール設定](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address)。
+
+## GitHub Educationを申請する
+
+### 条件と書類を確認する
+
+申請には個人のGitHubアカウントが必要です。学生向けの主な条件は13歳以上で、学位・卒業資格につながる教育課程に現在在籍していることです。学校発行の認証可能なメール、または現在の在籍を証明する資料を用意します。学校によって大学メールの認証が必要です。
+
+在学資料には、氏名・学校名・現在の在籍期間が確認できる学生証、履修時間割、成績証明書、在学証明書などを使います。日付のない学生証しかない場合は、現在の在籍が分かる追加資料を準備します。
+
+### 申請を送信する
+
+1. GitHubへサインインします。
+2. [Education benefits](https://github.com/settings/education/benefits)を開き、申請開始（Start an application）を選びます。
+3. 学生として申請し、学校名・大学メールなど、フォームが求める情報を入力します。
+4. 在学証明を求められたら、文字と日付が読める資料をフォームの案内に沿って提出します。
+5. 内容を確認して送信し、申請状況を確認します。
+
+**ここでの完了は申請送信までです。** 審査待ちは環境構築の失敗ではありません。`setup-check.md` に「申請済み・審査待ち」などの状態だけ記録します。証明書の画像は学習メモや公開リポジトリに入れません。
+
+大学メールが発行されない学校では、申請画面の案内に沿って在学資料や学校のメール発行方針を示します。ドメインが認識されない場合は公式ヘルプの案内からサポートへ連絡します。
+
+条件・申請方法の一次情報：[GitHub Educationへの学生申請](https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student)。
+
+### 承認後の確認
+
+承認されたらEducation benefitsで利用できる特典を確認します。GitHub Copilotなどの特典は別途有効化が必要な場合があり、反映に数日かかることもあります。有料プランしか表示されない場合は、そのまま購入せず、承認状態と公式案内を確認します。
+
+公式資料：[学生向けCopilotの設定](https://docs.github.com/copilot/how-tos/copilot-on-github/set-up-copilot/enable-copilot/set-up-for-students)。
+
+## 完了チェックと提出
+
+次の項目を自分で確認し、`setup-check.md` を更新します。
+
+- [ ] `brew --version` または `winget --version` が表示される。
+- [ ] VS Codeを起動でき、`code --version` が表示される。
+- [ ] `git --version` が表示される。
+- [ ] `setup-check.md` を作成・保存できる。
+- [ ] Markdownの通常プレビューと左右分割プレビューを開ける。
+- [ ] 原稿の編集がプレビューに反映される。
+- [ ] Gitの名前・メール・既定ブランチを確認した。
+- [ ] GitHubにサインインでき、登録メールと大学メールを認証した。
+- [ ] 二要素認証を有効にし、回復コードを安全に保管した。
+- [ ] Educationを申請した。または、未申請の理由を整理した。
+
+授業での提出例は `setup-check.md` です。OS、確認したソフトのバージョン、完了項目、分かったこと、困っていることを記録します。アカウント名・メール・認証情報・学生証は含めません。提出先は授業担当者が指定します。
+
+**確認問題：** GitとGitHubはそれぞれ何をする道具ですか。Markdownの原稿とプレビューはどのような関係ですか。自分の言葉で説明してみましょう。
+
+## 困ったとき
+
+### Macでbrewが見つからない
+
+導入後のPATH設定が未反映の可能性があります。インストール最後のNext stepsを確認し、指示を実行してターミナルを開き直します。[Homebrew導入資料](https://docs.brew.sh/Installation)を参照してください。
+
+### codeまたはgitが見つからない
+
+インストール後も古いターミナルを使っている可能性があります。VS Code内のターミナルも含めて開き直します。Macの `code` は[macOSの節](#sec-mac)のPATH設定を確認します。Windowsはインストール完了を確認し、[公式設定手順](https://code.visualstudio.com/docs/setup/windows)を参照します。
+
+### Windowsでwingetが見つからない
+
+App Installerが未導入・未更新の可能性があります。Microsoft Storeで確認します。Storeが利用制限されている場合は、大学の管理担当者へ相談します。[winget公式資料](https://learn.microsoft.com/windows/package-manager/winget/)を参照してください。
+
+### Markdownプレビューが開かない・更新されない
+
+ファイルの拡張子が `.md` か確認します。原稿のタブを選び、コマンドパレットからMarkdownのプレビューを開きます。別ファイルのプレビューを見ていないか確認し、保存します。横に開くキーは同時押しを2段階に分けます。[VS Code公式資料](https://code.visualstudio.com/docs/languages/markdown)も確認してください。
+
+### GitHubの確認メールが届かない
+
+迷惑メール、メールアドレスの入力間違い、大学メールの受信制限を確認します。Settings → Emailsで再送できます。[メール認証の公式案内](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/verifying-your-email-address)を参照してください。
+
+### Educationで学校が見つからない・証明が受理されない
+
+大学メールの認証、学校名、書類の氏名・日付・可読性を確認します。却下理由が表示されたらそれを読み、必要な資料をそろえて再申請します。解決しない場合は[学生申請の公式案内](https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student)からサポートへ進みます。
+
+担当者へ相談するときは、OS、実行した操作、エラー文、試した対処を伝えます。スクリーンショットに秘密情報が写っていないか確認してから共有します。

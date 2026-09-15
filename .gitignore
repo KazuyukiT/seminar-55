@@ -1,0 +1,5 @@
+.quarto/
+_book/
+site_libs/
+*.typ
+.DS_Store

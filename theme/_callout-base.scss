@@ -1,0 +1,53 @@
+// =====================================================================
+// _callout-base.scss ― 代替コールアウト案の共通部品（各 callout-*.scss が @import）
+// Quarto 標準の「色帯ヘッダー・アイコン・太い左線」を外し、
+// 種別ごとの色 (--co) と日本語ラベルを用意する。
+// =====================================================================
+
+// 種別 → 日本語ラベル。用途に合わせて書き換えてください
+$callout-labels: (
+  note: "補足",
+  tip: "ヒント",
+  important: "重要",
+  warning: "注意",
+  caution: "留意",
+) !default;
+
+$callout-colors: (
+  note: $callout-color-note,
+  tip: $callout-color-tip,
+  important: $callout-color-important,
+  warning: $callout-color-warning,
+  caution: $callout-color-caution,
+);
+
+@mixin callout-reset {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  margin: 2rem 0;
+
+  > .callout-header {
+    background-color: transparent;
+    padding: 0;
+    font-size: .95rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  > .callout-header[data-bs-toggle="collapse"] { cursor: pointer; }
+  .callout-icon-container { display: none; }
+  .callout-body-container {
+    padding: 0;
+    font-size: .95rem;
+    > :last-child { margin-bottom: 0; }
+  }
+}
+
+// 種別ごとの色とラベルを CSS 変数へ
+@each $kind, $color in $callout-colors {
+  div.callout.callout-#{$kind} {
+    --co: #{$color};
+    --co-label: "#{map-get($callout-labels, $kind)}";
+  }
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <rect x="6" y="6" width="108" height="108" rx="26" fill="#2e7d4f"/>
+  <path d="M84 24 c0 22 -12 34 -30 36 c2 -18 14 -32 30 -36z" fill="#d9a441"/>
+  <path d="M54 60 c8 -10 16 -20 30 -36" stroke="#2e7d4f" stroke-width="2" fill="none"/>
+  <text x="60" y="88" font-family="'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif" font-size="40" font-weight="700" fill="#ffffff" text-anchor="middle">55</text>
+  <text x="60" y="105" font-family="'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif" font-size="13" font-weight="700" fill="#dbe9d3" text-anchor="middle">ゼミ</text>
+</svg>

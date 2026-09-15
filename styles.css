@@ -1,0 +1,7 @@
+:root { --bs-link-color: #176b72; }
+body { font-family: system-ui, -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif; }
+main { line-height: 1.85; }
+h1, h2, h3 { color: #17474e; }
+h2 { margin-top: 2.2rem; }
+pre { border-left: 3px solid #39828a; }
+.sidebar-title { font-weight: 700; }
