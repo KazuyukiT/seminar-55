@@ -128,5 +128,145 @@
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>環境構築</span>"
     ]
+  },
+  {
+    "objectID": "lesson/python-basics.html",
+    "href": "lesson/python-basics.html",
+    "title": "2  Pythonの基礎",
+    "section": "",
+    "text": "3 Pythonの基礎",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#この章の目標と進め方",
+    "href": "lesson/python-basics.html#この章の目標と進め方",
+    "title": "2  Pythonの基礎",
+    "section": "3.1 この章の目標と進め方",
+    "text": "3.1 この章の目標と進め方\n配布ファイル：演習ノートブック／解答ノートブック／PDF版。\nPythonは、計算やデータ処理の手順を文章のようなコードで書く言語です。この章では、架空の5人の学習時間を使い、集計して説明するところまで進みます。プログラミングの経験は必要ありません。\n\n値に名前を付け、数値と文字列を区別する。\nリストと辞書で複数のデータを扱う。\n条件分岐・繰り返し・関数を組み合わせる。\nエラーを読み、上から再実行できるノートブックを作る。\n\n授業全15回・サブゼミ全10回のうち、授業2回（各90分を仮定）＋サブゼミ1回（60分）を使う案です。授業時間に合わせて途中の演習を宿題にできます。\n\n\n\n\n\n\n\n\n回\n内容\n配分の目安\n\n\n\n\n授業A\n実行環境・計算・変数・リスト\n準備15分、説明と実行45分、演習20分、振り返り10分\n\n\n授業B\n条件分岐・繰り返し・辞書・関数\n復習10分、説明と実行55分、演習20分、振り返り5分\n\n\nサブゼミ\nエラー修正・総合課題・相互確認\n修正15分、課題30分、確認15分\n\n\n\n各例は「結果を予想する → 実行する → 数値を一つ変える → 違いを説明する」の順で進めてください。解答例は章末にまとめています。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#準備ノートブックを開く",
+    "href": "lesson/python-basics.html#準備ノートブックを開く",
+    "title": "2  Pythonの基礎",
+    "section": "3.2 準備：ノートブックを開く",
+    "text": "3.2 準備：ノートブックを開く\nノートブックは、説明文・コード・実行結果を一緒に保存するファイルです。拡張子は .ipynb です。\nこの章では準備の負担を小さくするため、ブラウザで動く Google Colab を使います。Googleアカウントとネット接続が必要です。VS CodeでPythonとJupyterが使える人は、同じファイルをVS Codeでも開けます。\n\n演習ノートブックをダウンロードします。\nGoogle Colabを開き、サインインします。\nノートブックを開く画面の「アップロード」からファイルを選びます。\n必要に応じて自分のDriveにコピーを保存します。保存先とファイル名を確認します。\n最初のコードセルを選び、左の実行ボタン、またはShift+Enterで実行します。\n\n「セル」はノートブックの一つの入力枠です。コードセルにPython、テキストセルにMarkdownを書きます。教材Webページ上のコードは、その場では実行されません。\nprint(\"こんにちは、Python\")\n結果： こんにちは、Python と表示されます。print() は括弧内の値を表示する関数です。引用符は文字列の境界を表します。\n\n\n\n\n\n\nノート実行順序が大切\n\n\n\n上のセルで作った変数を下のセルで使います。画面の並びではなく、実際に実行した順番で状態が変わります。作業の最後はランタイム（実行環境）を再起動し、「すべてのセルを実行」で上から動くか確認します。Colabの接続が切れると変数が失われることがあるので、ノートブックの保存を確認しましょう。\n\n\nVS Codeで実行する場合は、Python環境とMicrosoftのPython・Jupyter拡張を準備し、右上のカーネル選択で使用するPythonを選びます。カーネルはコードを実行するプログラムです。未設定なら今回はColabで進めて構いません。VS Code公式手順も参照できます。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#計算と変数",
+    "href": "lesson/python-basics.html#計算と変数",
+    "title": "2  Pythonの基礎",
+    "section": "3.3 計算と変数",
+    "text": "3.3 計算と変数\n\n3.3.1 計算を表示する\nprint(1200 + 800)\nprint(1200 * 3)\nprint(7 / 2)\nprint(7 // 2)\nprint(7 % 2)\nprint(2 ** 3)\n結果（上から）： 2000、3600、3.5、3、1、8。\n* は掛け算、/ は割り算、// は商を小さい整数側へ丸める除算、% は余り、** は累乗です。掛け算・割り算は足し算より先に計算されます。順序を変えたいときは括弧を使います。\n\n\n3.3.2 値に名前を付ける\nprice = 1200\nquantity = 3\ntotal = price * quantity\nprint(total)\n結果： 3600。price などを変数と呼びます。= は「右側を計算し、左側の名前に結び付ける」という代入です。数学の等式とは意味が異なります。\nquantity = 4\nprint(total)\ntotal = price * quantity\nprint(total)\n結果： 3600、4800。変数を変えても、過去に計算した値は自動更新されません。計算し直す必要があります。\n変数名には study_hours のように意味の分かる英小文字とアンダースコアを使います。大文字・小文字は区別されます。print、sum、list のような組み込み機能の名前は変数名に使わないでください。\n\n\n3.3.3 演習1：予算を計算する\n1冊850円の本を3冊買い、送料が200円かかります。価格・冊数・送料をそれぞれ変数にして合計を求めてください。その後、冊数を4に変更して再計算します。結果が変わる理由を1文で説明してください。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#数値文字列真偽値",
+    "href": "lesson/python-basics.html#数値文字列真偽値",
+    "title": "2  Pythonの基礎",
+    "section": "3.4 数値・文字列・真偽値",
+    "text": "3.4 数値・文字列・真偽値\n\n\n\n型\n例\n用途\n\n\n\n\nint\n3\n整数\n\n\nfloat\n2.5\n小数を含む数値\n\n\nstr\n\"ゼミ\"、\"3\"\n文字列\n\n\nbool\nTrue、False\n条件が成り立つか\n\n\n\nhours_text = \"3\"\nprint(hours_text + \"2\")\nhours = int(hours_text)\nprint(hours + 2)\nprint(type(hours_text).__name__)\n結果： 32、5、str。文字列の + は文字をつなぎます。int() は整数への変換、type() は型の確認です。小数の文字列 \"2.5\" を数値にしたいときは float() を使います。\nname = \"学生A\"\nhours = 2.5\nprint(f\"{name}の学習時間は{hours}時間です\")\n結果： 学生Aの学習時間は2.5時間です。先頭に f を付けた文字列では、{} に変数や計算式を入れられます。\n# から行末はコメントです。処理の目的や単位をメモできます。\nweekly_hours = 6  # 単位は時間／週\nprint(weekly_hours &gt;= 5)\n結果： True。&gt;= は「以上」の比較です。\n\n3.4.1 演習2：文字を数値にする\nminutes_text = \"90\" を整数に変換し、60で割って時間に直してください。f文字列を使って 学習時間は1.5時間です と表示します。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#リスト複数の値をまとめる",
+    "href": "lesson/python-basics.html#リスト複数の値をまとめる",
+    "title": "2  Pythonの基礎",
+    "section": "3.5 リスト：複数の値をまとめる",
+    "text": "3.5 リスト：複数の値をまとめる\n5人の1週間の学習時間を、リストにまとめます。角括弧 [] で囲み、値をコンマで区切ります。この章のデータはすべて架空です。\nstudy_hours = [2, 5, 0, 3, 10]\nprint(study_hours[0])\nprint(study_hours[-1])\nprint(study_hours[1:3])\nprint(len(study_hours))\n結果： 2、10、[5, 0]、5。位置を表す番号（インデックス）は0から始まります。-1 は最後、[1:3] は1番目から3番目の直前までです。len() は要素数を返します。\ntotal_hours = sum(study_hours)\nmean_hours = total_hours / len(study_hours)\nprint(total_hours)\nprint(mean_hours)\nprint(min(study_hours), max(study_hours))\n結果： 20、4.0、0 10。sum() は合計、min() と max() は最小値・最大値です。平均は空のリストでは計算できません。\n\n\n\n\n\n\n重要0と欠測を区別する\n\n\n\nここでの0は「学習時間が0時間という回答」です。「未回答」を0に置き換えると平均の意味が変わります。実際のデータ分析では、欠測をどう扱ったかを必ず記録します。\n\n\n\n3.5.1 演習3：一つの値で平均はどう変わるか\nstudy_hours を [2, 5, 0, 3, 20] に変えて平均を計算してください。最初の平均と比べ、平均だけで「典型的な学生」を説明する際の注意を1文で書きます。実験後は元の [2, 5, 0, 3, 10] に戻します。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#条件分岐条件で処理を変える",
+    "href": "lesson/python-basics.html#条件分岐条件で処理を変える",
+    "title": "2  Pythonの基礎",
+    "section": "3.6 条件分岐：条件で処理を変える",
+    "text": "3.6 条件分岐：条件で処理を変える\nhours = 5\nif hours &gt;= 5:\n    print(\"5時間以上\")\nelse:\n    print(\"5時間未満\")\n結果： 5時間以上。if の後ろに条件を書き、行末に : を付けます。条件が成り立つと、その下の字下げした処理が実行されます。else はそれ以外です。字下げは半角スペース4個にそろえます。\n\n\n\n比較\n意味\n\n\n\n\na == b\n等しい\n\n\na != b\n等しくない\n\n\na &gt; b、a &gt;= b\nより大きい、以上\n\n\na &lt; b、a &lt;= b\nより小さい、以下\n\n\n\n代入の = と比較の == を区別してください。条件を組み合わせるときは and（両方）、or（少なくとも一方）を使います。\nhours = 0\nif hours == 0:\n    print(\"0時間\")\nelif hours &lt; 5:\n    print(\"0時間より多く5時間未満\")\nelse:\n    print(\"5時間以上\")\n結果： 0時間。elif は追加の条件です。上から調べ、最初に成り立った枝だけを実行します。この例は0以上の時間を前提にしています。\n\n3.6.1 演習4：境界を確かめる\n最初の if の例を、hours が4、5、6の場合で試してください。条件を hours &gt; 5 に変えると、どの場合だけ結果が変わりますか。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#繰り返し同じ処理を各データに行う",
+    "href": "lesson/python-basics.html#繰り返し同じ処理を各データに行う",
+    "title": "2  Pythonの基礎",
+    "section": "3.7 繰り返し：同じ処理を各データに行う",
+    "text": "3.7 繰り返し：同じ処理を各データに行う\nstudy_hours = [2, 5, 0, 3, 10]\nfor hours in study_hours:\n    print(hours * 60)\n結果（上から）： 120、300、0、180、600。for はリストから値を順に取り出して hours に代入し、字下げした処理を繰り返します。\n\n3.7.1 条件に合う人数を数える\ncount = 0\nfor hours in study_hours:\n    if hours &gt;= 5:\n        count = count + 1\nprint(count)\n結果： 2。count = count + 1 は、現在の値に1を足して代入し直します。count の初期化はループの前、最後の表示はループの外です。実行前に、2、5、0、3、10を読んだ直後の count を紙に書いてみてください。\nrange(3) は0、1、2を順に生成します。決まった回数の繰り返しで使えます。\nfor i in range(3):\n    print(i)\n\n\n3.7.2 演習5：条件に合う値を集める\n空のリスト selected = [] を用意し、5時間以上の値を selected.append(hours) で追加してください。append() は末尾に要素を追加する操作です。元データを変更せず、結果が [5, 10] になることを確認します。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#辞書項目名と値を対応させる",
+    "href": "lesson/python-basics.html#辞書項目名と値を対応させる",
+    "title": "2  Pythonの基礎",
+    "section": "3.8 辞書：項目名と値を対応させる",
+    "text": "3.8 辞書：項目名と値を対応させる\n辞書は、項目名（キー）で値を取り出す仕組みです。リストの「何番目」と区別しましょう。\nstudent = {\"id\": \"A\", \"hours\": 2}\nprint(student[\"id\"])\nprint(student[\"hours\"])\n結果： A、2。辞書をリストに入れると、小さな表のように複数人の情報を扱えます。\nstudents = [\n    {\"id\": \"A\", \"hours\": 2},\n    {\"id\": \"B\", \"hours\": 5},\n    {\"id\": \"C\", \"hours\": 0},\n]\nfor student in students:\n    print(f\"{student['id']}: {student['hours']}時間\")\n結果： A: 2時間、B: 5時間、C: 0時間。外側の二重引用符と内側の一重引用符を区別してください。大量の表データを扱うpandasは、この基礎の後で学びます。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#関数処理に名前を付ける",
+    "href": "lesson/python-basics.html#関数処理に名前を付ける",
+    "title": "2  Pythonの基礎",
+    "section": "3.9 関数：処理に名前を付ける",
+    "text": "3.9 関数：処理に名前を付ける\n同じ計算を別の値でも使えるよう、関数にまとめます。\ndef to_minutes(hours):\n    return hours * 60\n\nresult = to_minutes(2.5)\nprint(result)\n結果： 150.0。def は関数の定義、hours は受け取る値の名前（引数）、return は返す値（戻り値）の指定です。定義しただけでは計算は実行されません。to_minutes(2.5) と呼び出すと動きます。\nprint() は表示、return は呼び出し元へ値を渡す操作です。返された値は次の計算に使えます。\nprint(to_minutes(1) + to_minutes(2))\n結果： 180。関数内で return の代わりに print だけを使うと、呼び出しの戻り値は None（値がないことを表す値）になります。\n\n3.9.1 演習6：割合を求める関数\npercentage(part, whole) を定義し、part / whole * 100 を返してください。percentage(2, 5) が 40.0 になることを確認します。ここでは whole が正の数であることを前提にします。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#エラーを読んで直す",
+    "href": "lesson/python-basics.html#エラーを読んで直す",
+    "title": "2  Pythonの基礎",
+    "section": "3.10 エラーを読んで直す",
+    "text": "3.10 エラーを読んで直す\nエラーは、処理を進められなかった場所を知らせる情報です。まずメッセージの最後の行で種類を読み、示された行とその前後を確認します。\n\n\n\n\n\n\n\n\nエラー\n典型的な原因\n最初に確かめること\n\n\n\n\nNameError\n変数が未定義\nスペル、定義セルの実行\n\n\nTypeError\n型の組み合わせが不適切\n文字列と数値の区別\n\n\nSyntaxError\n文法が不正\n:、括弧、引用符\n\n\nIndentationError\n字下げが不正\nブロックを半角4スペースにそろえる\n\n\nIndexError\nリストの範囲外\n5要素なら位置は0〜4\n\n\nKeyError\n辞書にキーがない\nキーの名前\n\n\nZeroDivisionError\n0で割った\n分母、空のリスト\n\n\n\n修正問題： 以下は意図的に誤ったコードです。単独のセルで試し、理由を説明して直します。提出時には修正済みにしてください。\nprint(\"3\" + 2)\nもう一問： study_hours = [2, 5, 0, 3, 10] に対して study_hours[5] を使うとどうなるでしょう。最後の値を取り出す方法を二つ考えてください。\n\n\n\n\n\n\nヒントAIに相談するとき\n\n\n\nまず結果を予想し、自分で1回実行します。相談では「期待した結果」「実際の結果」「短いコード」を伝え、「答え全部ではなく、原因とヒントを説明して」と依頼してみましょう。修正後は自分で再実行し、変更理由を説明します。実在の学生情報や認証情報は入力しません。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#総合課題学習時間の集計メモ",
+    "href": "lesson/python-basics.html#総合課題学習時間の集計メモ",
+    "title": "2  Pythonの基礎",
+    "section": "3.11 総合課題：学習時間の集計メモ",
+    "text": "3.11 総合課題：学習時間の集計メモ\n次のデータを新しいセルに定義してください。これは小規模な架空データであり、実際の学生集団について推論するための標本ではありません。\nsurvey_hours = [2, 5, 0, 3, 10]\n\n人数、合計、平均を計算し、単位とともに表示します。\n5時間以上の人数と割合（%）を求めます。人数は for と if で数え、割合は演習6の関数を使います。\nPython標準ライブラリの statistics から median を読み込み、中央値を求めます。標準ライブラリはPythonに付属する道具で、追加インストールは不要です。\n平均と中央値の違い、0時間の扱い、データの限界をMarkdownセルに3〜5文で説明します。\nランタイムを再起動し、上からすべて実行して同じ結果になることを確認します。\n\n中央値の計算方法：\nfrom statistics import median\nprint(median(survey_hours))\n確認値： 5人、20時間、平均4.0時間、5時間以上2人、40.0%、中央値3時間。\n提出するものは、コード・結果・考察を含む .ipynb ファイルです。Colabのファイルメニューからノートブックをダウンロードできます。AIを利用した場合は、何を相談し、何を自分で確認したかを末尾に記録します。\n\n\n\n確認観点\n達成の目安\n\n\n\n\n再現性\n再起動後も上から実行できる\n\n\n計算\n全確認値が一致し、単位がある\n\n\n理解\n条件と繰り返しの動きを説明できる\n\n\n解釈\n0と欠測を区別し、過度な一般化をしない",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#解答例と振り返り",
+    "href": "lesson/python-basics.html#解答例と振り返り",
+    "title": "2  Pythonの基礎",
+    "section": "3.12 解答例と振り返り",
+    "text": "3.12 解答例と振り返り\n先に自分のコードを保存してから比較してください。同じ結果になる別の書き方も正解です。\n\n3.12.1 演習1・2\nbook_price = 850\nbooks = 3\nshipping = 200\nprint(book_price * books + shipping)\nbooks = 4\nprint(book_price * books + shipping)\n\nminutes_text = \"90\"\nhours = int(minutes_text) / 60\nprint(f\"学習時間は{hours}時間です\")\n結果は2750円、3600円、1.5時間です。冊数を変えた後に合計を再計算しています。\n\n\n3.12.2 演習3・4\nchanged_hours = [2, 5, 0, 3, 20]\nprint(sum(changed_hours) / len(changed_hours))\n平均は6.0時間です。一つの大きな値で平均が上がるため、分布や中央値も確認します。演習4で結果が変わるのは5時間のときです。&gt;= は5を含み、&gt; は含みません。\n\n\n3.12.3 演習5・6\nstudy_hours = [2, 5, 0, 3, 10]\nselected = []\nfor hours in study_hours:\n    if hours &gt;= 5:\n        selected.append(hours)\nprint(selected)\n\ndef percentage(part, whole):\n    return part / whole * 100\n\nprint(percentage(2, 5))\n結果は [5, 10] と 40.0。修正問題は print(int(\"3\") + 2) なら数値の5になります。文字の連結を意図するなら print(\"3\" + \"2\") です。最後の要素は study_hours[4] または study_hours[-1] で取得できます。\n\n\n3.12.4 総合課題の解答例\nfrom statistics import median\n\ndef percentage(part, whole):\n    return part / whole * 100\n\nsurvey_hours = [2, 5, 0, 3, 10]\nn = len(survey_hours)\ntotal = sum(survey_hours)\ncount = 0\nfor hours in survey_hours:\n    if hours &gt;= 5:\n        count = count + 1\n\nprint(f\"人数: {n}人\")\nprint(f\"合計: {total}時間\")\nprint(f\"平均: {total / n:.1f}時間\")\nprint(f\"5時間以上: {count}人\")\nprint(f\"割合: {percentage(count, n):.1f}%\")\nprint(f\"中央値: {median(survey_hours)}時間\")\n:.1f は小数点以下を1桁にそろえて表示する指定です。このコードは空でない数値リストを前提にしています。\n考察例：平均は4.0時間、中央値は3時間である。10時間という値が平均を高くしている。0時間は有効な回答として含めた。この架空の5人の結果を、大学生全体の傾向と考えることはできない。\n振り返り： = と ==、print と return、リストと辞書の違いを、コードを指しながら相手に説明してください。次はCSVの読み込みとpandasによる表データの集計へ進みます。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "lesson/python-basics.html#公式資料",
+    "href": "lesson/python-basics.html#公式資料",
+    "title": "2  Pythonの基礎",
+    "section": "3.13 公式資料",
+    "text": "3.13 公式資料\n\nPythonチュートリアル：数値・文字列・リスト\nPythonチュートリアル：条件分岐・繰り返し・関数\nGoogle Colab FAQ\nVS CodeでのJupyterノートブック\n\n教材確認日：2026年10月2日。画面の名称はサービスの更新で変わることがあります。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Pythonの基礎</span>"
+    ]
   }
 ]
