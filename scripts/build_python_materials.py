@@ -28,7 +28,7 @@ def notebook(text, execute=False):
                 stream = io.StringIO()
                 with contextlib.redirect_stdout(stream):
                     exec(compile(chunk, f"cell-{counter}", "exec"), scope)
-                if stream.getvalue():
+                if stream.getvalue() and "sys.executable" not in chunk:
                     outputs.append({"output_type": "stream", "name": "stdout", "text": stream.getvalue()})
             cells.append({"cell_type": "code", "metadata": {}, "source": chunk.rstrip(),
                           "execution_count": counter if execute else None, "outputs": outputs})
