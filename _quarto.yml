@@ -3,6 +3,8 @@ profile:
 project:
   type: book
   output-dir: _book
+  resources:
+    - materials/
 book:
   title: "データ分析ゼミ：環境構築"
   subtitle: "はじめての開発環境とMarkdown"
@@ -10,6 +12,7 @@ book:
   chapters:
     - index.qmd
     - lesson/environment-setup.qmd
+    - lesson/python-basics.qmd
   search: true
   downloads: [pdf]
 lang: ja
