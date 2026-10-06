@@ -43,7 +43,19 @@ Pythonは、計算やデータ処理の手順を文章のようなコードで�
 
 ### uvで授業用の環境を作る
 
-Macはターミナル、WindowsはPowerShellを開き、`uv --version` でバージョンを確認します。ホームフォルダなど、自分の作業フォルダへ移動して以下を1行ずつ実行します。**Pythonのセルではなく、ターミナルに入力します。**
+**Windowsでは、uvをインストールしたWSLのLinux環境を使います。** VS Code本体はWindows側に置き、Microsoftの **WSL拡張**（`ms-vscode-remote.remote-wsl`）をインストールしてください。Macの人は通常のターミナルを使い、WSLの操作を省略します。
+
+Windows TerminalでUbuntuなど、uvを入れたディストリビューションのタブを開きます。PowerShellから入る場合は `wsl` を実行します。複数ある場合は `wsl -l -v` で名前を確認し、`wsl -d Ubuntu` のように対象を指定します（`Ubuntu` は自分の名前に置き換えます）。以降のuvコマンドは **WSL内のターミナル** で実行します。
+
+```bash
+cd ~
+uname -s
+uv --version
+```
+
+WSLでは `uname -s` が `Linux`、Macでは `Darwin` を表示します。`uv --version` でバージョンが表示されることを確認します。WSLの `~` はLinux側のホーム（通常 `/home/ユーザー名`）です。この授業のフォルダはここに作ります。Windowsの `C:` ドライブ側にある既存の `.venv` は流用しません。
+
+続けて以下を1行ずつ実行します。**Pythonのセルではなく、ターミナルに入力します。**
 
 ```bash
 uv init --python 3.12 python-basics
@@ -53,7 +65,9 @@ uv run python --version
 code .
 ```
 
-新しい `python-basics` フォルダを作り、Python 3.12を指定します。必要ならuvがPythonを取得します。`ipykernel` はノートブックからPythonを実行するためのパッケージです。最後の `.` は現在のフォルダを意味します。`code` が使えない場合はVS Codeの「フォルダーを開く」でこのフォルダを選びます。
+新しい `python-basics` フォルダを作り、Python 3.12を指定します。必要ならuvがPythonを取得します。`ipykernel` はノートブックからPythonを実行するためのパッケージです。最後の `.` は現在のフォルダを意味します。
+
+WSLから `code .` を実行すると、Windows側のVS CodeがWSLに接続して開きます。初回はVS Code Serverの準備を待ち、左下に **`WSL: Ubuntu` など接続先の表示** があることを確認します。`code` が使えない場合は、Windows側のVS CodeでF1を押し、`WSL: Connect to WSL using Distro` からuvを入れた環境を選び、そのウィンドウでLinux側の `python-basics` フォルダを開きます。Macの場合は通常の「フォルダーを開く」で構いません。
 
 同名のフォルダがある場合は内容を確認してください。既にuvで初期化済みなら `uv init` は繰り返さず、そのフォルダへ移動して残りの手順を行います。
 
@@ -68,11 +82,11 @@ code .
 
 ### VS Codeでカーネルを選ぶ
 
-1. 拡張機能からMicrosoft提供の **Python**（`ms-python.python`）と **Jupyter**（`ms-toolsai.jupyter`）をインストールします。導入済みならそのまま進みます。
+1. WSL接続中のVS Codeで、Microsoft提供の **Python**（`ms-python.python`）と **Jupyter**（`ms-toolsai.jupyter`）を確認します。「WSL: Ubuntuにインストール」などが表示されたら押し、**WSL側で利用できる状態**にします。Windows側だけへの導入では足りない場合があります。Macでは通常どおり導入します。
 2. [演習ノートブック](../materials/python-basics.ipynb)をダウンロードします。
-3. 作成した `python-basics` フォルダに保存し、VS Codeで開きます。
+3. 作成した `python-basics` フォルダに保存します。Windowsでダウンロードした場合は、WSLの作業フォルダで `explorer.exe .` を実行し、開いたエクスプローラーに `.ipynb` をコピーします。その後、**WSL接続中のVS Codeのファイル一覧**から開きます。提出時もこの方法で保存済みファイルを取り出せます。
 4. 右上の「カーネルの選択」から、必要なら「別のカーネルを選択」→「Python環境」を開き、**このフォルダの `.venv`** を選びます。
-5. Macでは `.venv/bin/python`、Windowsでは `.venv\Scripts\python.exe` が目印です。
+5. **WSLでもMacでも `.venv/bin/python`** を選びます。WSLでは `/home/ユーザー名/python-basics/.venv/bin/python` のようなパスが目印です。Windows側の `python.exe` ではありません。
 
 カーネルはセルを実行するプログラムです。ターミナルで仮想環境を有効化する操作は、この手順では不要です。最初に新しいコードセルで次を実行し、パスに `python-basics` と `.venv` が含まれることを確認します。
 
@@ -98,12 +112,13 @@ print("こんにちは、Python")
 
 ### 環境がうまく動かないとき
 
-- **`.venv` が候補に出ない：** ノートブック単体でなく `python-basics` フォルダを開いているか確認し、VS Codeを開き直します。
+- **`.venv` が候補に出ない：** 左下にWSL接続先が表示され、Python・Jupyter拡張がWSL側に入り、Linux側の `python-basics` フォルダを開いているか確認します。必要ならそのWSLで `code .` を実行し直します。Macでは開いているフォルダを確認します。
+- **uvが見つからない：** PowerShellでなく、uvを導入したWSLのターミナルか確認します。別のディストリビューションに入っていないかも確認し、ターミナルを開き直します。
 - **ipykernelがない：** そのフォルダのターミナルで `uv add --dev ipykernel` を実行し、カーネルを選び直します。
 - **違うPythonが動く：** セルの `sys.executable` と、ターミナルの `uv run python -c "import sys; print(sys.executable)"` のパスを比べ、同じ `.venv` を選択します。
 - **文字として表示される：** セルの種類をMarkdownからコードに切り替えます。
 
-公式資料：[uvとVS Codeの連携](https://docs.astral.sh/uv/guides/integration/jupyter/#using-jupyter-from-vs-code)、[VS Codeのノートブック操作](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)。
+公式資料：[VS CodeのWSL接続](https://code.visualstudio.com/docs/remote/wsl)、[uvとVS Codeの連携](https://docs.astral.sh/uv/guides/integration/jupyter/#using-jupyter-from-vs-code)、[VS Codeのノートブック操作](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)。
 
 ## 計算と変数
 
