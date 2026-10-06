@@ -10,6 +10,7 @@ source = (ROOT / "lesson/python-basics.qmd").read_text()
 body = re.sub(r"\A---\n.*?\n---\n", "", source, count=1, flags=re.S)
 body = re.sub(r"^:::.*$", "", body, flags=re.M)
 body = re.sub(r" \{#sec-python-basics\}", "", body)
+body = re.sub(r'\{download="[^"]+"\}', "", body)
 lesson, answers = body.split("## 解答例と振り返り", 1)
 
 def notebook(text, execute=False):

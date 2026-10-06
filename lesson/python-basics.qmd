@@ -16,7 +16,7 @@ format:
 
 ## この章の目標と進め方
 
-配布ファイル：[演習ノートブック](../materials/python-basics.ipynb)／[解答ノートブック](../materials/python-basics-solutions.ipynb)／[PDF版](../materials/python-basics.pdf)。
+配布ファイル：[演習ノートブック](../materials/python-basics.ipynb){download="python-basics.ipynb"}／[解答ノートブック](../materials/python-basics-solutions.ipynb){download="python-basics-solutions.ipynb"}／[PDF版](../materials/python-basics.pdf)。
 
 Pythonは、計算やデータ処理の手順を文章のようなコードで書く言語です。この章では、架空の5人の学習時間を使い、集計して説明するところまで進みます。プログラミングの経験は必要ありません。
 
@@ -83,7 +83,7 @@ WSLから `code .` を実行すると、Windows側のVS CodeがWSLに接続し�
 ### VS Codeでカーネルを選ぶ
 
 1. WSL接続中のVS Codeで、Microsoft提供の **Python**（`ms-python.python`）と **Jupyter**（`ms-toolsai.jupyter`）を確認します。「WSL: Ubuntuにインストール」などが表示されたら押し、**WSL側で利用できる状態**にします。Windows側だけへの導入では足りない場合があります。Macでは通常どおり導入します。
-2. [演習ノートブック](../materials/python-basics.ipynb)をダウンロードします。
+2. [演習ノートブック](../materials/python-basics.ipynb){download="python-basics.ipynb"}をダウンロードします。
 3. 作成した `python-basics` フォルダに保存します。Windowsでダウンロードした場合は、WSLの作業フォルダで `explorer.exe .` を実行し、開いたエクスプローラーに `.ipynb` をコピーします。その後、**WSL接続中のVS Codeのファイル一覧**から開きます。提出時もこの方法で保存済みファイルを取り出せます。
 4. 右上の「カーネルの選択」から、必要なら「別のカーネルを選択」→「Python環境」を開き、**このフォルダの `.venv`** を選びます。
 5. **WSLでもMacでも `.venv/bin/python`** を選びます。WSLでは `/home/ユーザー名/python-basics/.venv/bin/python` のようなパスが目印です。Windows側の `python.exe` ではありません。
