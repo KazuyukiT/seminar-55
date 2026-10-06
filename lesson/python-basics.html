@@ -275,13 +275,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>この章では、インストール済みの <strong>uvとVS Code</strong> を使い、自分のPCでPythonを実行します。uvはPythonとパッケージを管理する道具です。初回の環境準備にはネット接続が必要です。</p>
 <section id="uvで授業用の環境を作る" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="uvで授業用の環境を作る"><span class="header-section-number">3.2.1</span> uvで授業用の環境を作る</h3>
-<p>Macはターミナル、WindowsはPowerShellを開き、<code>uv --version</code> でバージョンを確認します。ホームフォルダなど、自分の作業フォルダへ移動して以下を1行ずつ実行します。<strong>Pythonのセルではなく、ターミナルに入力します。</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init <span class="at">--python</span> 3.12 python-basics</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> python-basics</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add <span class="at">--dev</span> ipykernel</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python <span class="at">--version</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<p>新しい <code>python-basics</code> フォルダを作り、Python 3.12を指定します。必要ならuvがPythonを取得します。<code>ipykernel</code> はノートブックからPythonを実行するためのパッケージです。最後の <code>.</code> は現在のフォルダを意味します。<code>code</code> が使えない場合はVS Codeの「フォルダーを開く」でこのフォルダを選びます。</p>
+<p><strong>Windowsでは、uvをインストールしたWSLのLinux環境を使います。</strong> VS Code本体はWindows側に置き、Microsoftの <strong>WSL拡張</strong>（<code>ms-vscode-remote.remote-wsl</code>）をインストールしてください。Macの人は通常のターミナルを使い、WSLの操作を省略します。</p>
+<p>Windows TerminalでUbuntuなど、uvを入れたディストリビューションのタブを開きます。PowerShellから入る場合は <code>wsl</code> を実行します。複数ある場合は <code>wsl -l -v</code> で名前を確認し、<code>wsl -d Ubuntu</code> のように対象を指定します（<code>Ubuntu</code> は自分の名前に置き換えます）。以降のuvコマンドは <strong>WSL内のターミナル</strong> で実行します。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-s</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> <span class="at">--version</span></span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>WSLでは <code>uname -s</code> が <code>Linux</code>、Macでは <code>Darwin</code> を表示します。<code>uv --version</code> でバージョンが表示されることを確認します。WSLの <code>~</code> はLinux側のホーム（通常 <code>/home/ユーザー名</code>）です。この授業のフォルダはここに作ります。Windowsの <code>C:</code> ドライブ側にある既存の <code>.venv</code> は流用しません。</p>
+<p>続けて以下を1行ずつ実行します。<strong>Pythonのセルではなく、ターミナルに入力します。</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init <span class="at">--python</span> 3.12 python-basics</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> python-basics</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add <span class="at">--dev</span> ipykernel</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python <span class="at">--version</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p>新しい <code>python-basics</code> フォルダを作り、Python 3.12を指定します。必要ならuvがPythonを取得します。<code>ipykernel</code> はノートブックからPythonを実行するためのパッケージです。最後の <code>.</code> は現在のフォルダを意味します。</p>
+<p>WSLから <code>code .</code> を実行すると、Windows側のVS CodeがWSLに接続して開きます。初回はVS Code Serverの準備を待ち、左下に <strong><code>WSL: Ubuntu</code> など接続先の表示</strong> があることを確認します。<code>code</code> が使えない場合は、Windows側のVS CodeでF1を押し、<code>WSL: Connect to WSL using Distro</code> からuvを入れた環境を選び、そのウィンドウでLinux側の <code>python-basics</code> フォルダを開きます。Macの場合は通常の「フォルダーを開く」で構いません。</p>
 <p>同名のフォルダがある場合は内容を確認してください。既にuvで初期化済みなら <code>uv init</code> は繰り返さず、そのフォルダへ移動して残りの手順を行います。</p>
 <table class="caption-top table">
 <thead>
@@ -314,18 +321,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="vs-codeでカーネルを選ぶ" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="vs-codeでカーネルを選ぶ"><span class="header-section-number">3.2.2</span> VS Codeでカーネルを選ぶ</h3>
 <ol type="1">
-<li>拡張機能からMicrosoft提供の <strong>Python</strong>（<code>ms-python.python</code>）と <strong>Jupyter</strong>（<code>ms-toolsai.jupyter</code>）をインストールします。導入済みならそのまま進みます。</li>
+<li>WSL接続中のVS Codeで、Microsoft提供の <strong>Python</strong>（<code>ms-python.python</code>）と <strong>Jupyter</strong>（<code>ms-toolsai.jupyter</code>）を確認します。「WSL: Ubuntuにインストール」などが表示されたら押し、<strong>WSL側で利用できる状態</strong>にします。Windows側だけへの導入では足りない場合があります。Macでは通常どおり導入します。</li>
 <li><a href="../materials/python-basics.ipynb">演習ノートブック</a>をダウンロードします。</li>
-<li>作成した <code>python-basics</code> フォルダに保存し、VS Codeで開きます。</li>
+<li>作成した <code>python-basics</code> フォルダに保存します。Windowsでダウンロードした場合は、WSLの作業フォルダで <code>explorer.exe .</code> を実行し、開いたエクスプローラーに <code>.ipynb</code> をコピーします。その後、<strong>WSL接続中のVS Codeのファイル一覧</strong>から開きます。提出時もこの方法で保存済みファイルを取り出せます。</li>
 <li>右上の「カーネルの選択」から、必要なら「別のカーネルを選択」→「Python環境」を開き、<strong>このフォルダの <code>.venv</code></strong> を選びます。</li>
-<li>Macでは <code>.venv/bin/python</code>、Windowsでは <code>.venv\Scripts\python.exe</code> が目印です。</li>
+<li><strong>WSLでもMacでも <code>.venv/bin/python</code></strong> を選びます。WSLでは <code>/home/ユーザー名/python-basics/.venv/bin/python</code> のようなパスが目印です。Windows側の <code>python.exe</code> ではありません。</li>
 </ol>
 <p>カーネルはセルを実行するプログラムです。ターミナルで仮想環境を有効化する操作は、この手順では不要です。最初に新しいコードセルで次を実行し、パスに <code>python-basics</code> と <code>.venv</code> が含まれることを確認します。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.executable)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.executable)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p>パスはPCごとに異なります。次に挨拶のセルを選び、左の実行ボタン、またはShift+Enterで実行します。</p>
 <p>「セル」はノートブックの一つの入力枠です。コードセルにPython、テキストセルにMarkdownを書きます。教材Webページ上のコードは、その場では実行されません。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"こんにちは、Python"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"こんにちは、Python"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>こんにちは、Python</code> と表示されます。<code>print()</code> は括弧内の値を表示する関数です。引用符は文字列の境界を表します。</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -344,38 +351,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="環境がうまく動かないとき" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="環境がうまく動かないとき"><span class="header-section-number">3.2.3</span> 環境がうまく動かないとき</h3>
 <ul>
-<li><strong><code>.venv</code> が候補に出ない：</strong> ノートブック単体でなく <code>python-basics</code> フォルダを開いているか確認し、VS Codeを開き直します。</li>
+<li><strong><code>.venv</code> が候補に出ない：</strong> 左下にWSL接続先が表示され、Python・Jupyter拡張がWSL側に入り、Linux側の <code>python-basics</code> フォルダを開いているか確認します。必要ならそのWSLで <code>code .</code> を実行し直します。Macでは開いているフォルダを確認します。</li>
+<li><strong>uvが見つからない：</strong> PowerShellでなく、uvを導入したWSLのターミナルか確認します。別のディストリビューションに入っていないかも確認し、ターミナルを開き直します。</li>
 <li><strong>ipykernelがない：</strong> そのフォルダのターミナルで <code>uv add --dev ipykernel</code> を実行し、カーネルを選び直します。</li>
 <li><strong>違うPythonが動く：</strong> セルの <code>sys.executable</code> と、ターミナルの <code>uv run python -c "import sys; print(sys.executable)"</code> のパスを比べ、同じ <code>.venv</code> を選択します。</li>
 <li><strong>文字として表示される：</strong> セルの種類をMarkdownからコードに切り替えます。</li>
 </ul>
-<p>公式資料：<a href="https://docs.astral.sh/uv/guides/integration/jupyter/#using-jupyter-from-vs-code">uvとVS Codeの連携</a>、<a href="https://code.visualstudio.com/docs/datascience/jupyter-notebooks">VS Codeのノートブック操作</a>。</p>
+<p>公式資料：<a href="https://code.visualstudio.com/docs/remote/wsl">VS CodeのWSL接続</a>、<a href="https://docs.astral.sh/uv/guides/integration/jupyter/#using-jupyter-from-vs-code">uvとVS Codeの連携</a>、<a href="https://code.visualstudio.com/docs/datascience/jupyter-notebooks">VS Codeのノートブック操作</a>。</p>
 </section>
 </section>
 <section id="計算と変数" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="計算と変数"><span class="header-section-number">3.3</span> 計算と変数</h2>
 <section id="計算を表示する" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="計算を表示する"><span class="header-section-number">3.3.1</span> 計算を表示する</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1200</span> <span class="op">+</span> <span class="dv">800</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1200</span> <span class="op">*</span> <span class="dv">3</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">7</span> <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">7</span> <span class="op">//</span> <span class="dv">2</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">7</span> <span class="op">%</span> <span class="dv">2</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">2</span> <span class="op">**</span> <span class="dv">3</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1200</span> <span class="op">+</span> <span class="dv">800</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1200</span> <span class="op">*</span> <span class="dv">3</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">7</span> <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">7</span> <span class="op">//</span> <span class="dv">2</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">7</span> <span class="op">%</span> <span class="dv">2</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">2</span> <span class="op">**</span> <span class="dv">3</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果（上から）：</strong> <code>2000</code>、<code>3600</code>、<code>3.5</code>、<code>3</code>、<code>1</code>、<code>8</code>。</p>
 <p><code>*</code> は掛け算、<code>/</code> は割り算、<code>//</code> は商を小さい整数側へ丸める除算、<code>%</code> は余り、<code>**</code> は累乗です。掛け算・割り算は足し算より先に計算されます。順序を変えたいときは括弧を使います。</p>
 </section>
 <section id="値に名前を付ける" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="値に名前を付ける"><span class="header-section-number">3.3.2</span> 値に名前を付ける</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> <span class="dv">1200</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> price <span class="op">*</span> quantity</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>結果：</strong> <code>3600</code>。<code>price</code> などを変数と呼びます。<code>=</code> は「右側を計算し、左側の名前に結び付ける」という代入です。数学の等式とは意味が異なります。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> <span class="dv">1200</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> price <span class="op">*</span> quantity</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>結果：</strong> <code>3600</code>。<code>price</code> などを変数と呼びます。<code>=</code> は「右側を計算し、左側の名前に結び付ける」という代入です。数学の等式とは意味が異なります。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> price <span class="op">*</span> quantity</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>3600</code>、<code>4800</code>。変数を変えても、過去に計算した値は自動更新されません。計算し直す必要があります。</p>
 <p>変数名には <code>study_hours</code> のように意味の分かる英小文字とアンダースコアを使います。大文字・小文字は区別されます。<code>print</code>、<code>sum</code>、<code>list</code> のような組み込み機能の名前は変数名に使わないでください。</p>
 </section>
@@ -417,19 +425,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>hours_text <span class="op">=</span> <span class="st">"3"</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hours_text <span class="op">+</span> <span class="st">"2"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="bu">int</span>(hours_text)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hours <span class="op">+</span> <span class="dv">2</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(hours_text).<span class="va">__name__</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hours_text <span class="op">=</span> <span class="st">"3"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hours_text <span class="op">+</span> <span class="st">"2"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="bu">int</span>(hours_text)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(hours <span class="op">+</span> <span class="dv">2</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(hours_text).<span class="va">__name__</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>32</code>、<code>5</code>、<code>str</code>。文字列の <code>+</code> は文字をつなぎます。<code>int()</code> は整数への変換、<code>type()</code> は型の確認です。小数の文字列 <code>"2.5"</code> を数値にしたいときは <code>float()</code> を使います。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="st">"学生A"</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="fl">2.5</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">の学習時間は</span><span class="sc">{</span>hours<span class="sc">}</span><span class="ss">時間です"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="st">"学生A"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="fl">2.5</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">の学習時間は</span><span class="sc">{</span>hours<span class="sc">}</span><span class="ss">時間です"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>学生Aの学習時間は2.5時間です</code>。先頭に <code>f</code> を付けた文字列では、<code>{}</code> に変数や計算式を入れられます。</p>
 <p><code>#</code> から行末はコメントです。処理の目的や単位をメモできます。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>weekly_hours <span class="op">=</span> <span class="dv">6</span>  <span class="co"># 単位は時間／週</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(weekly_hours <span class="op">&gt;=</span> <span class="dv">5</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>weekly_hours <span class="op">=</span> <span class="dv">6</span>  <span class="co"># 単位は時間／週</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(weekly_hours <span class="op">&gt;=</span> <span class="dv">5</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>True</code>。<code>&gt;=</code> は「以上」の比較です。</p>
 <section id="演習2文字を数値にする" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="演習2文字を数値にする"><span class="header-section-number">3.4.1</span> 演習2：文字を数値にする</h3>
@@ -439,17 +447,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="リスト複数の値をまとめる" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="リスト複数の値をまとめる"><span class="header-section-number">3.5</span> リスト：複数の値をまとめる</h2>
 <p>5人の1週間の学習時間を、リストにまとめます。角括弧 <code>[]</code> で囲み、値をコンマで区切ります。この章のデータはすべて架空です。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>study_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(study_hours[<span class="dv">0</span>])</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(study_hours[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(study_hours[<span class="dv">1</span>:<span class="dv">3</span>])</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(study_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>study_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(study_hours[<span class="dv">0</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(study_hours[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(study_hours[<span class="dv">1</span>:<span class="dv">3</span>])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(study_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>2</code>、<code>10</code>、<code>[5, 0]</code>、<code>5</code>。位置を表す番号（インデックス）は0から始まります。<code>-1</code> は最後、<code>[1:3]</code> は1番目から3番目の直前までです。<code>len()</code> は要素数を返します。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>total_hours <span class="op">=</span> <span class="bu">sum</span>(study_hours)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mean_hours <span class="op">=</span> total_hours <span class="op">/</span> <span class="bu">len</span>(study_hours)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total_hours)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean_hours)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">min</span>(study_hours), <span class="bu">max</span>(study_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>total_hours <span class="op">=</span> <span class="bu">sum</span>(study_hours)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mean_hours <span class="op">=</span> total_hours <span class="op">/</span> <span class="bu">len</span>(study_hours)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total_hours)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean_hours)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">min</span>(study_hours), <span class="bu">max</span>(study_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>20</code>、<code>4.0</code>、<code>0 10</code>。<code>sum()</code> は合計、<code>min()</code> と <code>max()</code> は最小値・最大値です。平均は空のリストでは計算できません。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -471,11 +479,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="条件分岐条件で処理を変える" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="条件分岐条件で処理を変える"><span class="header-section-number">3.6</span> 条件分岐：条件で処理を変える</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"5時間以上"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"5時間未満"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"5時間以上"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"5時間未満"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>5時間以上</code>。<code>if</code> の後ろに条件を書き、行末に <code>:</code> を付けます。条件が成り立つと、その下の字下げした処理が実行されます。<code>else</code> はそれ以外です。字下げは半角スペース4個にそろえます。</p>
 <table class="caption-top table">
 <thead>
@@ -504,13 +512,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>代入の <code>=</code> と比較の <code>==</code> を区別してください。条件を組み合わせるときは <code>and</code>（両方）、<code>or</code>（少なくとも一方）を使います。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> hours <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"0時間"</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> hours <span class="op">&lt;</span> <span class="dv">5</span>:</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"0時間より多く5時間未満"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"5時間以上"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> hours <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"0時間"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> hours <span class="op">&lt;</span> <span class="dv">5</span>:</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"0時間より多く5時間未満"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"5時間以上"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>0時間</code>。<code>elif</code> は追加の条件です。上から調べ、最初に成り立った枝だけを実行します。この例は0以上の時間を前提にしています。</p>
 <section id="演習4境界を確かめる" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="演習4境界を確かめる"><span class="header-section-number">3.6.1</span> 演習4：境界を確かめる</h3>
@@ -519,21 +527,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="繰り返し同じ処理を各データに行う" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="繰り返し同じ処理を各データに行う"><span class="header-section-number">3.7</span> 繰り返し：同じ処理を各データに行う</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>study_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> study_hours:</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(hours <span class="op">*</span> <span class="dv">60</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>study_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> study_hours:</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(hours <span class="op">*</span> <span class="dv">60</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果（上から）：</strong> <code>120</code>、<code>300</code>、<code>0</code>、<code>180</code>、<code>600</code>。<code>for</code> はリストから値を順に取り出して <code>hours</code> に代入し、字下げした処理を繰り返します。</p>
 <section id="条件に合う人数を数える" class="level3" data-number="3.7.1">
 <h3 data-number="3.7.1" class="anchored" data-anchor-id="条件に合う人数を数える"><span class="header-section-number">3.7.1</span> 条件に合う人数を数える</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> study_hours:</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> count <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(count)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> study_hours:</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> count <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(count)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>2</code>。<code>count = count + 1</code> は、現在の値に1を足して代入し直します。<code>count</code> の初期化はループの前、最後の表示はループの外です。実行前に、2、5、0、3、10を読んだ直後の <code>count</code> を紙に書いてみてください。</p>
 <p><code>range(3)</code> は0、1、2を順に生成します。決まった回数の繰り返しで使えます。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="演習5条件に合う値を集める" class="level3" data-number="3.7.2">
 <h3 data-number="3.7.2" class="anchored" data-anchor-id="演習5条件に合う値を集める"><span class="header-section-number">3.7.2</span> 演習5：条件に合う値を集める</h3>
@@ -543,30 +551,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="辞書項目名と値を対応させる" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="辞書項目名と値を対応させる"><span class="header-section-number">3.8</span> 辞書：項目名と値を対応させる</h2>
 <p>辞書は、項目名（キー）で値を取り出す仕組みです。リストの「何番目」と区別しましょう。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>student <span class="op">=</span> {<span class="st">"id"</span>: <span class="st">"A"</span>, <span class="st">"hours"</span>: <span class="dv">2</span>}</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(student[<span class="st">"id"</span>])</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(student[<span class="st">"hours"</span>])</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>student <span class="op">=</span> {<span class="st">"id"</span>: <span class="st">"A"</span>, <span class="st">"hours"</span>: <span class="dv">2</span>}</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(student[<span class="st">"id"</span>])</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(student[<span class="st">"hours"</span>])</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>A</code>、<code>2</code>。辞書をリストに入れると、小さな表のように複数人の情報を扱えます。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>students <span class="op">=</span> [</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"id"</span>: <span class="st">"A"</span>, <span class="st">"hours"</span>: <span class="dv">2</span>},</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"id"</span>: <span class="st">"B"</span>, <span class="st">"hours"</span>: <span class="dv">5</span>},</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"id"</span>: <span class="st">"C"</span>, <span class="st">"hours"</span>: <span class="dv">0</span>},</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> student <span class="kw">in</span> students:</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>student[<span class="st">'id'</span>]<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>student[<span class="st">'hours'</span>]<span class="sc">}</span><span class="ss">時間"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>students <span class="op">=</span> [</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"id"</span>: <span class="st">"A"</span>, <span class="st">"hours"</span>: <span class="dv">2</span>},</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"id"</span>: <span class="st">"B"</span>, <span class="st">"hours"</span>: <span class="dv">5</span>},</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"id"</span>: <span class="st">"C"</span>, <span class="st">"hours"</span>: <span class="dv">0</span>},</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> student <span class="kw">in</span> students:</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>student[<span class="st">'id'</span>]<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>student[<span class="st">'hours'</span>]<span class="sc">}</span><span class="ss">時間"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>A: 2時間</code>、<code>B: 5時間</code>、<code>C: 0時間</code>。外側の二重引用符と内側の一重引用符を区別してください。大量の表データを扱うpandasは、この基礎の後で学びます。</p>
 </section>
 <section id="関数処理に名前を付ける" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="関数処理に名前を付ける"><span class="header-section-number">3.9</span> 関数：処理に名前を付ける</h2>
 <p>同じ計算を別の値でも使えるよう、関数にまとめます。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> to_minutes(hours):</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> hours <span class="op">*</span> <span class="dv">60</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> to_minutes(<span class="fl">2.5</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> to_minutes(hours):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> hours <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> to_minutes(<span class="fl">2.5</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>150.0</code>。<code>def</code> は関数の定義、<code>hours</code> は受け取る値の名前（引数）、<code>return</code> は返す値（戻り値）の指定です。定義しただけでは計算は実行されません。<code>to_minutes(2.5)</code> と呼び出すと動きます。</p>
 <p><code>print()</code> は表示、<code>return</code> は呼び出し元へ値を渡す操作です。返された値は次の計算に使えます。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(to_minutes(<span class="dv">1</span>) <span class="op">+</span> to_minutes(<span class="dv">2</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(to_minutes(<span class="dv">1</span>) <span class="op">+</span> to_minutes(<span class="dv">2</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>結果：</strong> <code>180</code>。関数内で <code>return</code> の代わりに <code>print</code> だけを使うと、呼び出しの戻り値は <code>None</code>（値がないことを表す値）になります。</p>
 <section id="演習6割合を求める関数" class="level3" data-number="3.9.1">
 <h3 data-number="3.9.1" class="anchored" data-anchor-id="演習6割合を求める関数"><span class="header-section-number">3.9.1</span> 演習6：割合を求める関数</h3>
@@ -647,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="総合課題学習時間の集計メモ" class="level2" data-number="3.11">
 <h2 data-number="3.11" class="anchored" data-anchor-id="総合課題学習時間の集計メモ"><span class="header-section-number">3.11</span> 総合課題：学習時間の集計メモ</h2>
 <p>次のデータを新しいセルに定義してください。これは小規模な架空データであり、実際の学生集団について推論するための標本ではありません。</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>survey_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>survey_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="1">
 <li>人数、合計、平均を計算し、単位とともに表示します。</li>
 <li>5時間以上の人数と割合（%）を求めます。人数は <code>for</code> と <code>if</code> で数え、割合は演習6の関数を使います。</li>
@@ -656,8 +664,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>VS Codeでカーネルを再起動し、上からすべて実行して同じ結果になることを確認します。</li>
 </ol>
 <p>中央値の計算方法：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statistics <span class="im">import</span> median</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(median(survey_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statistics <span class="im">import</span> median</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(median(survey_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>確認値：</strong> 5人、20時間、平均4.0時間、5時間以上2人、40.0%、中央値3時間。</p>
 <p>提出するものは、コード・結果・考察を含む <code>.ipynb</code> ファイルです。VS Codeで保存し、作業フォルダ内のファイルを提出します。<code>.venv</code> フォルダは提出しません。環境確認セルの出力にPCのユーザー名などが含まれる場合は、その出力だけ消して保存してください。AIを利用した場合は、何を相談し、何を自分で確認したかを末尾に記録します。</p>
 <table class="caption-top table">
@@ -692,60 +700,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>先に自分のコードを保存してから比較してください。同じ結果になる別の書き方も正解です。</p>
 <section id="演習12" class="level3" data-number="3.12.1">
 <h3 data-number="3.12.1" class="anchored" data-anchor-id="演習12"><span class="header-section-number">3.12.1</span> 演習1・2</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>book_price <span class="op">=</span> <span class="dv">850</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>shipping <span class="op">=</span> <span class="dv">200</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(book_price <span class="op">*</span> books <span class="op">+</span> shipping)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(book_price <span class="op">*</span> books <span class="op">+</span> shipping)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>minutes_text <span class="op">=</span> <span class="st">"90"</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="bu">int</span>(minutes_text) <span class="op">/</span> <span class="dv">60</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"学習時間は</span><span class="sc">{</span>hours<span class="sc">}</span><span class="ss">時間です"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>book_price <span class="op">=</span> <span class="dv">850</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>shipping <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(book_price <span class="op">*</span> books <span class="op">+</span> shipping)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(book_price <span class="op">*</span> books <span class="op">+</span> shipping)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>minutes_text <span class="op">=</span> <span class="st">"90"</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> <span class="bu">int</span>(minutes_text) <span class="op">/</span> <span class="dv">60</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"学習時間は</span><span class="sc">{</span>hours<span class="sc">}</span><span class="ss">時間です"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p>結果は2750円、3600円、1.5時間です。冊数を変えた後に合計を再計算しています。</p>
 </section>
 <section id="演習34" class="level3" data-number="3.12.2">
 <h3 data-number="3.12.2" class="anchored" data-anchor-id="演習34"><span class="header-section-number">3.12.2</span> 演習3・4</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>changed_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">20</span>]</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(changed_hours) <span class="op">/</span> <span class="bu">len</span>(changed_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>changed_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">20</span>]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(changed_hours) <span class="op">/</span> <span class="bu">len</span>(changed_hours))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p>平均は6.0時間です。一つの大きな値で平均が上がるため、分布や中央値も確認します。演習4で結果が変わるのは5時間のときです。<code>&gt;=</code> は5を含み、<code>&gt;</code> は含みません。</p>
 </section>
 <section id="演習56" class="level3" data-number="3.12.3">
 <h3 data-number="3.12.3" class="anchored" data-anchor-id="演習56"><span class="header-section-number">3.12.3</span> 演習5・6</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>study_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>selected <span class="op">=</span> []</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> study_hours:</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        selected.append(hours)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(selected)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> percentage(part, whole):</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> part <span class="op">/</span> whole <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(percentage(<span class="dv">2</span>, <span class="dv">5</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>study_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>selected <span class="op">=</span> []</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> study_hours:</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        selected.append(hours)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(selected)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> percentage(part, whole):</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> part <span class="op">/</span> whole <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(percentage(<span class="dv">2</span>, <span class="dv">5</span>))</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p>結果は <code>[5, 10]</code> と <code>40.0</code>。修正問題は <code>print(int("3") + 2)</code> なら数値の5になります。文字の連結を意図するなら <code>print("3" + "2")</code> です。最後の要素は <code>study_hours[4]</code> または <code>study_hours[-1]</code> で取得できます。</p>
 </section>
 <section id="総合課題の解答例" class="level3" data-number="3.12.4">
 <h3 data-number="3.12.4" class="anchored" data-anchor-id="総合課題の解答例"><span class="header-section-number">3.12.4</span> 総合課題の解答例</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statistics <span class="im">import</span> median</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> percentage(part, whole):</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> part <span class="op">/</span> whole <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>survey_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(survey_hours)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="bu">sum</span>(survey_hours)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> survey_hours:</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> count <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"人数: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">人"</span>)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"合計: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">時間"</span>)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"平均: </span><span class="sc">{</span>total <span class="op">/</span> n<span class="sc">:.1f}</span><span class="ss">時間"</span>)</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"5時間以上: </span><span class="sc">{</span>count<span class="sc">}</span><span class="ss">人"</span>)</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"割合: </span><span class="sc">{</span>percentage(count, n)<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"中央値: </span><span class="sc">{</span>median(survey_hours)<span class="sc">}</span><span class="ss">時間"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statistics <span class="im">import</span> median</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> percentage(part, whole):</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> part <span class="op">/</span> whole <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>survey_hours <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>]</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(survey_hours)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="bu">sum</span>(survey_hours)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hours <span class="kw">in</span> survey_hours:</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> hours <span class="op">&gt;=</span> <span class="dv">5</span>:</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> count <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"人数: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">人"</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"合計: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">時間"</span>)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"平均: </span><span class="sc">{</span>total <span class="op">/</span> n<span class="sc">:.1f}</span><span class="ss">時間"</span>)</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"5時間以上: </span><span class="sc">{</span>count<span class="sc">}</span><span class="ss">人"</span>)</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"割合: </span><span class="sc">{</span>percentage(count, n)<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"中央値: </span><span class="sc">{</span>median(survey_hours)<span class="sc">}</span><span class="ss">時間"</span>)</span></code></pre></div><button title="コピー" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>:.1f</code> は小数点以下を1桁にそろえて表示する指定です。このコードは空でない数値リストを前提にしています。</p>
 <p>考察例：平均は4.0時間、中央値は3時間である。10時間という値が平均を高くしている。0時間は有効な回答として含めた。この架空の5人の結果を、大学生全体の傾向と考えることはできない。</p>
 <p><strong>振り返り：</strong> <code>=</code> と <code>==</code>、<code>print</code> と <code>return</code>、リストと辞書の違いを、コードを指しながら相手に説明してください。次はCSVの読み込みとpandasによる表データの集計へ進みます。</p>
