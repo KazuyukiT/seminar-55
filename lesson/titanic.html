@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>タイタニック分析演習</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../materials/titanic70/style.css" />
+</head>
+<body>
+<nav aria-label="サイトナビゲーション"><a href="../index.html">← ゼミ教材トップへ</a></nav>
+<header id="title-block-header">
+<h1 class="title">タイタニック分析演習</h1>
+<p class="subtitle">70分の演習｜VS Code・Jupyter・uv・Python</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#事前準備" id="toc-事前準備">事前準備</a></li>
+<li><a href="#titanicデータを読み仮説を分析する70分"
+id="toc-titanicデータを読み仮説を分析する70分">Titanic：データを読み、仮説を分析する（70分）</a>
+<ul>
+<li><a href="#仮説を立てる05分"
+id="toc-仮説を立てる05分">1．仮説を立てる（0–5分）</a></li>
+<li><a href="#データの構造を確認する515分"
+id="toc-データの構造を確認する515分">2．データの構造を確認する（5–15分）</a>
+<ul>
+<li><a href="#変数の辞書" id="toc-変数の辞書">変数の辞書</a></li>
+</ul></li>
+<li><a href="#集計可視化1530分"
+id="toc-集計可視化1530分">3．集計・可視化（15–30分）</a>
+<ul>
+<li><a href="#全体の生存者数と割合" id="toc-全体の生存者数と割合">3.1
+全体の生存者数と割合</a></li>
+<li><a href="#性別と旅客クラス" id="toc-性別と旅客クラス">3.2
+性別と旅客クラス</a></li>
+<li><a href="#性別と旅客クラスを同時に見る"
+id="toc-性別と旅客クラスを同時に見る">3.3
+性別と旅客クラスを同時に見る</a></li>
+<li><a href="#年齢分布と欠損" id="toc-年齢分布と欠損">3.4
+年齢分布と欠損</a></li>
+</ul></li>
+<li><a href="#分析の準備3045分"
+id="toc-分析の準備3045分">4．分析の準備（30–45分）</a>
+<ul>
+<li><a href="#欠損値は0ではない" id="toc-欠損値は0ではない">4.1
+欠損値は0ではない</a></li>
+<li><a href="#ダミー変数を作る" id="toc-ダミー変数を作る">4.2
+ダミー変数を作る</a></li>
+<li><a href="#仮説に対応する変数を準備する"
+id="toc-仮説に対応する変数を準備する">4.3
+仮説に対応する変数を準備する</a></li>
+</ul></li>
+<li><a href="#仮説に基づく重回帰4558分"
+id="toc-仮説に基づく重回帰4558分">5．仮説に基づく重回帰（45–58分）</a>
+<ul>
+<li><a href="#係数の読み方5分"
+id="toc-係数の読み方5分">係数の読み方（5分）</a></li>
+</ul></li>
+<li><a href="#決定木を読む5867分"
+id="toc-決定木を読む5867分">6．決定木を読む（58–67分）</a></li>
+<li><a href="#振り返り提出6770分"
+id="toc-振り返り提出6770分">7．振り返り・提出（67–70分）</a>
+<ul>
+<li><a href="#出典参照" id="toc-出典参照">出典・参照</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<p><a href="../materials/titanic70/titanic_student.ipynb"
+download="titanic_student.ipynb">学生用ノートブック</a> ｜ <a
+href="../materials/titanic70/pyproject.toml" download="pyproject.toml">実行環境の設定</a></p>
+<h2 id="事前準備">事前準備</h2>
+<p>Kaggleからダウンロードした<code>train.csv</code>と<code>test.csv</code>を、作業フォルダ内の<code>data</code>フォルダに置きます。上の2ファイルを作業フォルダ直下に保存してください。</p>
+<p>VS
+Codeでそのフォルダを開き、MicrosoftのPython・Jupyter拡張を準備します。ターミナルで次を実行してください。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync <span class="at">--python</span> 3.13</span></code></pre></div>
+<p>ノートブック右上のカーネルで、このフォルダの<code>.venv</code>を選びます。WindowsとWSLを混在させないでください。WSLを使う場合はVS
+CodeもWSL側のフォルダに接続します。</p>
+<p>このページは閲覧用です。Pythonの実行と回答の記入は、ダウンロードしたノートブックで行います。</p>
+<div class="callout-note">
+<p>コードの構文と原データの件数は確認済みですが、作成環境の通信制約により全セルの実行検証は未完了です。授業前に動作を確認してください。</p>
+</div>
+<h1
+id="titanicデータを読み仮説を分析する70分">Titanic：データを読み、仮説を分析する（70分）</h1>
+<p><strong>氏名：　　　　学籍番号：　　　　実施日：　　　　</strong></p>
+<p>今回はデータの確認・集計・前処理を重視し、仮説に基づく重回帰と深さ2の決定木を実行します。
+モデルの精度比較、データの追加分割、Kaggleへの提出は次回です。</p>
+<table>
+<thead>
+<tr>
+<th>時間</th>
+<th>作業</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–5分</td>
+<td>仮説</td>
+</tr>
+<tr>
+<td>5–15分</td>
+<td>データの構造</td>
+</tr>
+<tr>
+<td>15–30分</td>
+<td>集計・可視化</td>
+</tr>
+<tr>
+<td>30–45分</td>
+<td>分析の準備</td>
+</tr>
+<tr>
+<td>45–58分</td>
+<td>仮説に基づく重回帰</td>
+</tr>
+<tr>
+<td>58–67分</td>
+<td>決定木</td>
+</tr>
+<tr>
+<td>67–70分</td>
+<td>振り返り・提出</td>
+</tr>
+</tbody>
+</table>
+<p><strong>操作</strong>：コードセルはShift+Enterで上から実行。回答欄はダブルクリックして編集し、Shift+Enterで確定。
+コードを変更したら、そのセルとそれ以降の関連セルを実行し直します。
+事前にREADMEの環境準備を済ませ、右上のカーネルでこのフォルダの<code>.venv</code>を選んでください。</p>
+<h2 id="仮説を立てる05分">1．仮説を立てる（0–5分）</h2>
+<p>乗客のどのような特徴が生存と関係しそうでしょうか。事故当時の状況を想像して書きましょう。
+ただし、データに含まれない事情も多く、予測に役立つ関連と因果関係は区別します。</p>
+<p><strong>回答1（結果を見る前に記入）</strong> - 私の仮説： -
+その理由： - 関係しそうな変数： - 予想する方向（プラス／マイナス）：</p>
+<h2
+id="データの構造を確認する515分">2．データの構造を確認する（5–15分）</h2>
+<p>最初のセルは準備用です。<code>sys.executable</code>が、この教材の<code>.venv</code>内を指すことを確認します。
+グラフ内のラベルは、環境による日本語の文字化けを避けるため英語にしています。</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree, export_text</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;Python:&#39;</span>, sys.executable)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">&#39;display.max_columns&#39;</span>, <span class="dv">20</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">&#39;figure.figsize&#39;</span>] <span class="op">=</span> (<span class="dv">7</span>, <span class="dv">4</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># VS Codeでは、titanic70フォルダを「フォルダーを開く」で開いてください。</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> Path(<span class="st">&#39;data&#39;</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> (DATA_DIR <span class="op">/</span> <span class="st">&#39;train.csv&#39;</span>).exists():</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="st">&#39;data/train.csv がありません。READMEの配置と作業フォルダを確認してください。&#39;</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> pd.read_csv(DATA_DIR <span class="op">/</span> <span class="st">&#39;train.csv&#39;</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> pd.read_csv(DATA_DIR <span class="op">/</span> <span class="st">&#39;test.csv&#39;</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>required <span class="op">=</span> {<span class="st">&#39;Survived&#39;</span>,<span class="st">&#39;Sex&#39;</span>,<span class="st">&#39;Age&#39;</span>,<span class="st">&#39;Pclass&#39;</span>,<span class="st">&#39;Fare&#39;</span>,<span class="st">&#39;SibSp&#39;</span>,<span class="st">&#39;Parch&#39;</span>,<span class="st">&#39;PassengerId&#39;</span>}</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> required <span class="op">&lt;=</span> <span class="bu">set</span>(train.columns), <span class="st">&#39;Kaggle Titanicのtrain.csvを使ってください。&#39;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">set</span>(train[<span class="st">&#39;Survived&#39;</span>].dropna().unique()) <span class="op">&lt;=</span> {<span class="dv">0</span>,<span class="dv">1</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>display(train.head())</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;train（行数, 列数）:&#39;</span>, train.shape)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;test （行数, 列数）:&#39;</span>, test.shape)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;trainだけにある列:&#39;</span>, <span class="bu">sorted</span>(<span class="bu">set</span>(train.columns) <span class="op">-</span> <span class="bu">set</span>(test.columns)))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>train.info()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>display(train.describe().<span class="bu">round</span>(<span class="dv">2</span>))</span></code></pre></div>
+<h3 id="変数の辞書">変数の辞書</h3>
+<table>
+<thead>
+<tr>
+<th>変数</th>
+<th>意味</th>
+<th>扱い方の注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PassengerId</td>
+<td>乗客の識別番号</td>
+<td>数量の大小ではない。説明変数に使わない</td>
+</tr>
+<tr>
+<td>Survived</td>
+<td>死亡0／生存1</td>
+<td>目的変数。平均は生存率</td>
+</tr>
+<tr>
+<td>Pclass</td>
+<td>1等・2等・3等</td>
+<td>回帰ではダミー変数にする</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>氏名</td>
+<td>今回は使わない</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>記録上の性別</td>
+<td>femaleを1、maleを0にする</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>年齢</td>
+<td>欠損あり</td>
+</tr>
+<tr>
+<td>SibSp</td>
+<td>同乗する兄弟姉妹・配偶者数</td>
+<td>自分自身を含まない</td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>同乗する親・子ども数</td>
+<td>友人などは含まない</td>
+</tr>
+<tr>
+<td>Ticket</td>
+<td>チケット番号</td>
+<td>今回は使わない</td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>運賃</td>
+<td>所得そのものではない。共有チケット等にも注意</td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>客室番号</td>
+<td>欠損が多い。今回は使わない</td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>乗船港 C/Q/S</td>
+<td>今回は使わない</td>
+</tr>
+</tbody>
+</table>
+<p><strong>回答2</strong> 1. trainの乗客数と列数： 2.
+testに正解の列はありますか： 3.
+PassengerIdとAgeは、どちらも数値です。意味の違いは： 4.
+Survivedの平均は何を表しますか：</p>
+<h2 id="集計可視化1530分">3．集計・可視化（15–30分）</h2>
+<h3 id="全体の生存者数と割合">3.1 全体の生存者数と割合</h3>
+<p>人数（count）と割合（share）を区別しましょう。</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> train[<span class="st">&#39;Survived&#39;</span>].value_counts().sort_index()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>display(pd.DataFrame({<span class="st">&#39;人数&#39;</span>: counts, <span class="st">&#39;割合&#39;</span>: counts <span class="op">/</span> <span class="bu">len</span>(train)}))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;全体の生存率: </span><span class="sc">{</span>train[<span class="st">&#39;Survived&#39;</span>]<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<h3 id="性別と旅客クラス">3.2 性別と旅客クラス</h3>
+<p><code>groupby</code>でグループを作り、<code>agg</code>で人数と平均をまとめます。
+生存率だけでなく、人数も確認してください。</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>by_sex <span class="op">=</span> train.groupby(<span class="st">&#39;Sex&#39;</span>)[<span class="st">&#39;Survived&#39;</span>].agg(n<span class="op">=</span><span class="st">&#39;size&#39;</span>, survival_rate<span class="op">=</span><span class="st">&#39;mean&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>by_class <span class="op">=</span> train.groupby(<span class="st">&#39;Pclass&#39;</span>)[<span class="st">&#39;Survived&#39;</span>].agg(n<span class="op">=</span><span class="st">&#39;size&#39;</span>, survival_rate<span class="op">=</span><span class="st">&#39;mean&#39;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>display(by_sex.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>display(by_class.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>by_sex[<span class="st">&#39;survival_rate&#39;</span>].plot.bar(ax<span class="op">=</span>axes[<span class="dv">0</span>], rot<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">&#39;#237A8A&#39;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>by_class[<span class="st">&#39;survival_rate&#39;</span>].plot.bar(ax<span class="op">=</span>axes[<span class="dv">1</span>], rot<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">&#39;#D78B3B&#39;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">&#39;Survival rate&#39;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<h3 id="性別と旅客クラスを同時に見る">3.3
+性別と旅客クラスを同時に見る</h3>
+<p>性別の違いは、同じ旅客クラスの中でも見られるでしょうか。</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>joint <span class="op">=</span> train.groupby([<span class="st">&#39;Pclass&#39;</span>,<span class="st">&#39;Sex&#39;</span>])[<span class="st">&#39;Survived&#39;</span>].agg(n<span class="op">=</span><span class="st">&#39;size&#39;</span>, survival_rate<span class="op">=</span><span class="st">&#39;mean&#39;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>display(joint.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>display(train.pivot_table(index<span class="op">=</span><span class="st">&#39;Pclass&#39;</span>, columns<span class="op">=</span><span class="st">&#39;Sex&#39;</span>, values<span class="op">=</span><span class="st">&#39;Survived&#39;</span>, aggfunc<span class="op">=</span><span class="st">&#39;mean&#39;</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<h3 id="年齢分布と欠損">3.4 年齢分布と欠損</h3>
+<p>ヒストグラムは各年齢層の人数を示します。年齢不明の乗客はこのグラフに含まれません。</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>train[<span class="st">&#39;Age&#39;</span>].hist(bins<span class="op">=</span><span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">86</span>, <span class="dv">5</span>), color<span class="op">=</span><span class="st">&#39;#237A8A&#39;</span>, edgecolor<span class="op">=</span><span class="st">&#39;white&#39;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Age (years)&#39;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Passengers with observed age&#39;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;年齢が分かる人数:&#39;</span>, train[<span class="st">&#39;Age&#39;</span>].notna().<span class="bu">sum</span>())</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;年齢不明の人数:&#39;</span>, train[<span class="st">&#39;Age&#39;</span>].isna().<span class="bu">sum</span>())</span></code></pre></div>
+<p><strong>回答3</strong> -
+仮説と一致した点（人数・割合などの数値を1つ以上使う）： - 意外だった点：
+- 性別と旅客クラスを同時に見ると分かったこと：</p>
+<p>余裕があれば、運賃や同乗家族数と生存の関係も集計してください。</p>
+<h2 id="分析の準備3045分">4．分析の準備（30–45分）</h2>
+<h3 id="欠損値は0ではない">4.1 欠損値は0ではない</h3>
+<p>欠損率を確認します。欠損の多い列があるという理由だけで、全列について空欄のある行を一括削除しないでください。
+元データ<code>train</code>は残し、<code>work</code>に分析用のコピーを作ります。</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>missing <span class="op">=</span> pd.DataFrame({<span class="st">&#39;欠損数&#39;</span>: train.isna().<span class="bu">sum</span>(), <span class="st">&#39;欠損率&#39;</span>: train.isna().mean()})</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>display(missing.sort_values(<span class="st">&#39;欠損数&#39;</span>, ascending<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>work <span class="op">=</span> train.copy()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>age_median <span class="op">=</span> train[<span class="st">&#39;Age&#39;</span>].median()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fare_median <span class="op">=</span> train[<span class="st">&#39;Fare&#39;</span>].median()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;AgeFilled&#39;</span>] <span class="op">=</span> train[<span class="st">&#39;Age&#39;</span>].fillna(age_median)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;FareFilled&#39;</span>] <span class="op">=</span> train[<span class="st">&#39;Fare&#39;</span>].fillna(fare_median)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;補完に使う年齢の中央値:&#39;</span>, age_median)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;補完に使う運賃の中央値:&#39;</span>, fare_median)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 変更された行を見て、0への置換とは異なることを確認</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> train[<span class="st">&#39;Age&#39;</span>].isna()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>display(work.loc[mask, [<span class="st">&#39;PassengerId&#39;</span>,<span class="st">&#39;Age&#39;</span>,<span class="st">&#39;AgeFilled&#39;</span>]].head())</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, series, title <span class="kw">in</span> <span class="bu">zip</span>(axes, [train[<span class="st">&#39;Age&#39;</span>], work[<span class="st">&#39;AgeFilled&#39;</span>]], [<span class="st">&#39;Before imputation&#39;</span>, <span class="st">&#39;After median imputation&#39;</span>]):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    ax.hist(series.dropna(), bins<span class="op">=</span><span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">86</span>, <span class="dv">5</span>), color<span class="op">=</span><span class="st">&#39;#237A8A&#39;</span>, edgecolor<span class="op">=</span><span class="st">&#39;white&#39;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">&#39;Age&#39;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">&#39;Count&#39;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>limit <span class="op">=</span> <span class="bu">max</span>(ax.get_ylim()[<span class="dv">1</span>] <span class="cf">for</span> ax <span class="kw">in</span> axes)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, limit)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p>中央値で埋めた年齢は、確認できた実年齢ではありません。中央値付近の人数が人工的に増え、結果も補完方法に依存します。</p>
+<h3 id="ダミー変数を作る">4.2 ダミー変数を作る</h3>
+<p>基準は男性・1等です。切片を入れる回帰では、各カテゴリを全部ダミーにせず基準を1つ省きます。</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> work[<span class="st">&#39;Sex&#39;</span>].isin([<span class="st">&#39;female&#39;</span>,<span class="st">&#39;male&#39;</span>]).<span class="bu">all</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> work[<span class="st">&#39;Pclass&#39;</span>].isin([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]).<span class="bu">all</span>()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;Female&#39;</span>] <span class="op">=</span> work[<span class="st">&#39;Sex&#39;</span>].<span class="bu">map</span>({<span class="st">&#39;female&#39;</span>: <span class="dv">1</span>, <span class="st">&#39;male&#39;</span>: <span class="dv">0</span>})</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;Class2&#39;</span>] <span class="op">=</span> (work[<span class="st">&#39;Pclass&#39;</span>] <span class="op">==</span> <span class="dv">2</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;Class3&#39;</span>] <span class="op">=</span> (work[<span class="st">&#39;Pclass&#39;</span>] <span class="op">==</span> <span class="dv">3</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>display(work[[<span class="st">&#39;Sex&#39;</span>,<span class="st">&#39;Female&#39;</span>,<span class="st">&#39;Pclass&#39;</span>,<span class="st">&#39;Class2&#39;</span>,<span class="st">&#39;Class3&#39;</span>]].head(<span class="dv">10</span>))</span></code></pre></div>
+<p><strong>回答4（コードの出力も使って確認）</strong>
+|属性|Female|Class2|Class3| |—|—|—|—| |男性・1等|記入|記入|記入|
+|女性・2等|記入|記入|記入| |女性・3等|記入|記入|記入|</p>
+<ul>
+<li>欠損年齢を0で埋めると、どんな問題がありますか：</li>
+<li>中央値補完の前後で、分布はどう変わりましたか：</li>
+</ul>
+<h3 id="仮説に対応する変数を準備する">4.3
+仮説に対応する変数を準備する</h3>
+<p>基本変数はFemale・AgeFilled・Class2・Class3。追加候補から原則1つ選びます。</p>
+<table>
+<thead>
+<tr>
+<th>変数名</th>
+<th>意味・1単位</th>
+<th>仮説の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fare10</td>
+<td>運賃10ポンド分</td>
+<td>高い運賃の乗客ほど生存しやすい</td>
+</tr>
+<tr>
+<td>FamilyCount</td>
+<td>同乗家族1人分（本人除く）</td>
+<td>家族が多いと避難が難しい</td>
+</tr>
+<tr>
+<td>Alone</td>
+<td>記録上の同乗家族なし＝1</td>
+<td>家族なしの乗客は生存しにくい</td>
+</tr>
+<tr>
+<td>Child</td>
+<td>年齢16歳未満＝1</td>
+<td>子どもは優先的に救助された可能性</td>
+</tr>
+</tbody>
+</table>
+<p><code>Child</code>の年齢不明者は、補完年齢によって分類されます。真の子ども判定ではない点に注意。
+16歳という境界は結果を見る前に固定します。</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;Fare10&#39;</span>] <span class="op">=</span> work[<span class="st">&#39;FareFilled&#39;</span>] <span class="op">/</span> <span class="dv">10</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;FamilyCount&#39;</span>] <span class="op">=</span> work[<span class="st">&#39;SibSp&#39;</span>] <span class="op">+</span> work[<span class="st">&#39;Parch&#39;</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;Alone&#39;</span>] <span class="op">=</span> (work[<span class="st">&#39;FamilyCount&#39;</span>] <span class="op">==</span> <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>CHILD_AGE <span class="op">=</span> <span class="dv">16</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>work[<span class="st">&#39;Child&#39;</span>] <span class="op">=</span> (work[<span class="st">&#39;AgeFilled&#39;</span>] <span class="op">&lt;</span> CHILD_AGE).astype(<span class="bu">int</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>base_features <span class="op">=</span> [<span class="st">&#39;Female&#39;</span>,<span class="st">&#39;AgeFilled&#39;</span>,<span class="st">&#39;Class2&#39;</span>,<span class="st">&#39;Class3&#39;</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>choices <span class="op">=</span> [<span class="st">&#39;Fare10&#39;</span>,<span class="st">&#39;FamilyCount&#39;</span>,<span class="st">&#39;Alone&#39;</span>,<span class="st">&#39;Child&#39;</span>]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>display(work[base_features <span class="op">+</span> choices].head())</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> work[base_features <span class="op">+</span> choices].notna().<span class="bu">all</span>().<span class="bu">all</span>()</span></code></pre></div>
+<h2 id="仮説に基づく重回帰4558分">5．仮説に基づく重回帰（45–58分）</h2>
+<p>生存1・死亡0を目的変数としてOLS（最小二乗法）で重回帰します。これは線形確率モデルです。
+係数×100は予測生存率の「パーセントポイント」の差になります。</p>
+<p><strong>まず記入（3分）</strong> - 追加する変数： -
+仮説とその変数のつながり： - 係数の予想符号と理由：</p>
+<p>下の<code>extra_features</code>を編集します。例はFamilyCountです。仮説に合わせて変更してください。
+2つ以上入れる場合は教員と相談してください。FamilyCountと、その内訳SibSp・Parchをすべて同時に入れることはできません。</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ★学生が変更する場所（例：[&#39;Fare10&#39;]、[&#39;Alone&#39;]、[&#39;Child&#39;]）</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>extra_features <span class="op">=</span> [<span class="st">&#39;FamilyCount&#39;</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> extra_features <span class="kw">and</span> <span class="bu">set</span>(extra_features) <span class="op">&lt;=</span> <span class="bu">set</span>(choices), <span class="st">&#39;候補から1つ以上選んでください。&#39;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>selected_features <span class="op">=</span> base_features <span class="op">+</span> extra_features</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(selected_features) <span class="op">==</span> <span class="bu">len</span>(<span class="bu">set</span>(selected_features)), <span class="st">&#39;同じ変数を重複して指定しないでください。&#39;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> work[<span class="st">&#39;Survived&#39;</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>X_base <span class="op">=</span> sm.add_constant(work[base_features].astype(<span class="bu">float</span>), has_constant<span class="op">=</span><span class="st">&#39;add&#39;</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>X_selected <span class="op">=</span> sm.add_constant(work[selected_features].astype(<span class="bu">float</span>), has_constant<span class="op">=</span><span class="st">&#39;add&#39;</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.linalg.matrix_rank(X_selected) <span class="op">==</span> X_selected.shape[<span class="dv">1</span>], <span class="st">&#39;説明変数が完全に重複しています。&#39;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># HC3は不均一分散に頑健な標準誤差。今日は係数の解釈に集中します。</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>base_model <span class="op">=</span> sm.OLS(y, X_base).fit(cov_type<span class="op">=</span><span class="st">&#39;HC3&#39;</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>selected_model <span class="op">=</span> sm.OLS(y, X_selected).fit(cov_type<span class="op">=</span><span class="st">&#39;HC3&#39;</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>coef_table <span class="op">=</span> pd.DataFrame({<span class="st">&#39;基本モデル&#39;</span>: base_model.params, <span class="st">&#39;自分のモデル&#39;</span>: selected_model.params})</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>coef_table[<span class="st">&#39;自分のモデル：係数×100&#39;</span>] <span class="op">=</span> coef_table[<span class="st">&#39;自分のモデル&#39;</span>] <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>display(coef_table.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div>
+<h3 id="係数の読み方5分">係数の読み方（5分）</h3>
+<ul>
+<li><strong>Female</strong>：年齢・旅客クラス・追加変数が同じとき、男性に対する女性の差。</li>
+<li><strong>AgeFilled</strong>：他の説明変数が同じとき、年齢1歳あたりの差。ただし補完年齢を含む。</li>
+<li><strong>Class2／Class3</strong>：他の説明変数が同じとき、1等に対する差。</li>
+<li><strong>Fare10</strong>：他の説明変数が同じとき、運賃10ポンドあたりの差。</li>
+<li><strong>FamilyCount</strong>：他の説明変数が同じとき、同乗家族1人あたりの差。</li>
+<li><strong>Alone</strong>：他の説明変数が同じとき、同乗家族がいる乗客に対する差。</li>
+<li><strong>Child</strong>：年齢の直線的な関係に追加される、16歳未満側の差。年齢と子どもダミーは同時に動くので、「同年齢の子どもと大人の比較」とは読めない。</li>
+</ul>
+<p>例えばFamilyCountの係数が仮に−0.04なら「性別・年齢・旅客クラスが同じ場合、同乗家族が1人多いと予測生存率は4パーセントポイント低い」。これは架空の例です。
+切片は男性・1等・年齢0・追加変数0の予測値であり、全体の生存率ではありません。</p>
+<p><strong>回答5</strong> 1.
+追加変数の係数と、その意味（比較対象・単位・調整した変数を明記）： 2.
+基本モデルから変化した係数を1つ選び、変化を書く： 3.
+結果は最初の仮説と整合的ですか： 4.
+この結果だけでは判断できないこと：</p>
+<p>符号が予想どおりでも仮説の証明にはなりません。係数の変化も因果的なメカニズムを証明しません。</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 数人の予測を読む。正解率の計算・モデル比較は次回。</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fitted <span class="op">=</span> selected_model.predict(X_selected)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>preview <span class="op">=</span> work[[<span class="st">&#39;PassengerId&#39;</span>,<span class="st">&#39;Survived&#39;</span>] <span class="op">+</span> selected_features].head().copy()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>preview[<span class="st">&#39;回帰の予測値&#39;</span>] <span class="op">=</span> fitted.head()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>preview[<span class="st">&#39;0.5以上なら生存と分類&#39;</span>] <span class="op">=</span> (fitted.head() <span class="op">&gt;=</span> <span class="fl">0.5</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>display(preview.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;予測値の最小・最大:&#39;</span>, <span class="bu">round</span>(fitted.<span class="bu">min</span>(), <span class="dv">3</span>), <span class="bu">round</span>(fitted.<span class="bu">max</span>(), <span class="dv">3</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;0〜1の範囲外の件数:&#39;</span>, ((fitted <span class="op">&lt;</span> <span class="dv">0</span>) <span class="op">|</span> (fitted <span class="op">&gt;</span> <span class="dv">1</span>)).<span class="bu">sum</span>())</span></code></pre></div>
+<p>重回帰の予測値は0〜1を外れる場合があります。その場合は確率としてそのまま解釈できません。
+表示した値は学習に使った乗客への当てはめであり、未知の乗客への予測性能の証拠ではありません。</p>
+<h2 id="決定木を読む5867分">6．決定木を読む（58–67分）</h2>
+<p>自分が重回帰で選んだ特徴をそのまま使います。深さは2に固定します。
+決定木は条件で乗客を分け、最後に到達したグループ（葉）で多数派のクラスを予測します。
+表示された割合は、その葉の学習データの生存割合です。</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X_tree <span class="op">=</span> work[selected_features].astype(<span class="bu">float</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">55</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>tree.fit(X_tree, y.astype(<span class="bu">int</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plot_tree(tree, feature_names<span class="op">=</span>selected_features,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>          class_names<span class="op">=</span>[<span class="st">&#39;Died (0)&#39;</span>, <span class="st">&#39;Survived (1)&#39;</span>],</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>          impurity<span class="op">=</span><span class="va">False</span>, filled<span class="op">=</span><span class="va">True</span>, rounded<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Decision tree: max_depth = 2&#39;</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(export_text(tree, feature_names<span class="op">=</span>selected_features))</span></code></pre></div>
+<p>図の読み方：条件が真なら左、偽なら右に進みます。<code>samples</code>は人数、<code>value</code>は死亡・生存の内訳（バージョンによって人数または比率）、<code>class</code>は予測クラスです。
+例：Female ≤ 0.5は男性の側。AgeFilled ≤
+ある値なら、その年齢以下の側です。</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ★0始まりの行番号で乗客を1人選ぶ</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>row_number <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="dv">0</span> <span class="op">&lt;=</span> row_number <span class="op">&lt;</span> <span class="bu">len</span>(work)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>one <span class="op">=</span> X_tree.iloc[[row_number]]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>display(work.iloc[[row_number]][[<span class="st">&#39;PassengerId&#39;</span>,<span class="st">&#39;Survived&#39;</span>] <span class="op">+</span> selected_features])</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>path_nodes <span class="op">=</span> tree.decision_path(one).indices</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> node <span class="kw">in</span> path_nodes:</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    feature_id <span class="op">=</span> tree.tree_.feature[node]</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> feature_id <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        feature <span class="op">=</span> selected_features[feature_id]</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        threshold <span class="op">=</span> tree.tree_.threshold[node]</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> one.iloc[<span class="dv">0</span>][feature]</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        direction <span class="op">=</span> <span class="st">&#39;左&#39;</span> <span class="cf">if</span> value <span class="op">&lt;=</span> threshold <span class="cf">else</span> <span class="st">&#39;右&#39;</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&#39;</span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss"> = </span><span class="sc">{</span>value<span class="sc">:g}</span><span class="ss">、条件 ≤ </span><span class="sc">{</span>threshold<span class="sc">:.3f}</span><span class="ss"> → </span><span class="sc">{</span>direction<span class="sc">}</span><span class="ss">&#39;</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;予測クラス:&#39;</span>, <span class="bu">int</span>(tree.predict(one)[<span class="dv">0</span>]))</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;到達した葉の生存割合:&#39;</span>, <span class="bu">round</span>(tree.predict_proba(one)[<span class="dv">0</span>, <span class="bu">list</span>(tree.classes_).index(<span class="dv">1</span>)], <span class="dv">3</span>))</span></code></pre></div>
+<p><strong>回答6</strong> - 最初に分岐した変数と条件： -
+選んだ乗客のPassengerId： -
+どの条件を通り、最後に何と予測されましたか：</p>
+<p>木に自分の追加変数が現れなくても、「その変数は無関係」とは言えません。深さ制限や他の特徴との関連にも依存します。</p>
+<h2 id="振り返り提出6770分">7．振り返り・提出（67–70分）</h2>
+<p><strong>回答7</strong> -
+データの集計から分かったこと（数値を1つ以上）： -
+前処理で重要だと思ったこと： -
+自分の仮説と、回帰結果から言えること・言えないこと：</p>
+<p>回答欄を埋めて保存し、ファイル名を
+<code>titanic_学籍番号.ipynb</code> にして提出してください。
+次回はモデルの比較と未知のデータでの評価を扱います。</p>
+<h3 id="出典参照">出典・参照</h3>
+<ul>
+<li>データ：<a
+href="https://www.kaggle.com/competitions/titanic/data">Kaggle
+Titanic</a></li>
+<li><a
+href="https://docs.astral.sh/uv/guides/integration/jupyter/">uvとJupyter</a></li>
+<li><a
+href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.html">statsmodels
+OLS</a></li>
+<li><a
+href="https://scikit-learn.org/stable/modules/tree.html">scikit-learn
+決定木</a></li>
+</ul>
+</body>
+</html>
