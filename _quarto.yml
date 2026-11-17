@@ -13,6 +13,7 @@ book:
     - index.qmd
     - lesson/environment-setup.qmd
     - lesson/python-basics.qmd
+    - lesson/titanic.qmd
   search: true
   downloads: [pdf]
 lang: ja
